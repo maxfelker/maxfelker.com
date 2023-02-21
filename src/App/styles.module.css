@@ -1,5 +1,12 @@
 .content {
   padding:4rem;
   max-width: 650px;  
-  margin: 4rem auto;
+  margin: 0rem auto;
+}
+
+@media screen and (min-width: 1080px) {
+  .content {
+    margin: 4rem auto;
+  }  
+    
 }

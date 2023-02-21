@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  release:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: maxfelker.com/release:latest
+    ports:
+      - 80:80
+    environment:
+      NODE_ENV: production
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: maxfelker.com/dev:latest
+    ports:
+      - 5173:5173
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./public:/app/public
+      - ./src:/app/src
+      - ./index.html:/app/index.html
+      - ./manifest.json:/app/manifest.json
+      - ./package.json:/app/package.json
+      - ./sitemap.xml:/app/sitemap.xml
+      - ./vite.config.js:/app/vite.config.js
