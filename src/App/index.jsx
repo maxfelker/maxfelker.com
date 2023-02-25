@@ -10,7 +10,7 @@ export default function App() {
 
       <p>Learn more <a href="/about">about me</a> and my innovation journey.</p>
 
-      <p> I am building a <a target="_blank" href="https://terramajornonprod.z13.web.core.windows.net/">sci-fi videogame</a> 
+      <p> I am building a <a target="_blank" href="https://terramajornonprod.z13.web.core.windows.net/">sci-fi videogame</a> {" "}
           and I also make <a target="_blank" href="https://music.maxfelker.com">music</a></p>
 
     </div>

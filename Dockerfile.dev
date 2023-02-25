@@ -1,6 +1,11 @@
 FROM node:18-alpine
 WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci
-COPY . .
+COPY public ./public
+COPY src/ ./src
+COPY index.html ./
+COPY manifest.json ./
+COPY sitemap.xml ./
+COPY vite.config.js ./
+COPY package.json ./
+RUN npm i
 ENTRYPOINT npm run dev 
