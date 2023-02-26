@@ -1,18 +1,24 @@
-import styles from './styles.module.css'
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import HomePage from "../HomePage";
+import AboutPage from '../AboutPage'
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomePage />,
+  },
+  {
+    path: "/about",
+    element: <AboutPage />,
+  },
+]);
 
 export default function App() {
 
   return (
-    <div className={styles.content}>
-      <h1>Hi, I'm Max</h1>
-      <p>My superpower is empowering people with technology. I guide others through planning, 
-        building, and delivering solutions at scale.</p>
-
-      <p>Learn more <a href="/about">about me</a> and my innovation journey.</p>
-
-      <p> I am building a <a target="_blank" href="https://terramajornonprod.z13.web.core.windows.net/">sci-fi videogame</a> {" "}
-          and I also make <a target="_blank" href="https://music.maxfelker.com">music</a></p>
-
-    </div>
+    <RouterProvider router={router} />
   )
-}
+};
