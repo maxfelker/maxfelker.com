@@ -10,3 +10,45 @@
   }  
     
 }
+
+.gradientBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Moves the background behind the content */
+  background: #050505; /* Default color (near black) */
+  animation: pulseColors 30s ease infinite; /* Smooth and slow transitions */
+}
+
+.content {
+  position: relative;
+  z-index: 1; /* Ensures the text is above the background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+
+@keyframes pulseColors {
+  0% {
+    background: #050505; /* Near black */
+  }
+  20% {
+    background: #120a29; /* Very dark purple */
+  }
+  40% {
+    background: #0a0b25; /* Very dark blue */
+  }
+  60% {
+    background: #120a29; /* Very dark purple */
+  }
+  80% {
+    background: #050505; /* Near black */
+  }
+  100% {
+    background: #050505; /* Loop back to near black */
+  }
+}

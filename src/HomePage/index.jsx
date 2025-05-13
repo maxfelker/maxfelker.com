@@ -5,13 +5,12 @@ export default function HomePage() {
   return (
     <div className={styles.content}>
       <h1>Hi, I'm Max</h1>
-      <p>My superpower is empowering people with technology. I guide others through planning, 
-        building, and delivering solutions at scale.</p>
+      <p>My name is Max and I make things happen. I am passionate about fostering safe spaces where people thrive. I accelerate creative and enterprise product teams.</p>
+      
+      <p>Today, I work at Microsoft where I focus on cross-functional technology and strategy innovation at scale. With over 17 years of experience, I am a trusted and versatile leader.</p>
 
-      <p>Learn more <a href="/about">about me</a> and my innovation journey.</p>
+      <p>Learn more <a href="/about">about me</a>.</p>
 
-      <p> I am building a <a target="_blank" href="https://terramajornonprod.z13.web.core.windows.net/">sci-fi videogame</a> {" "}
-          and I also make <a target="_blank" href="https://music.maxfelker.com">music</a></p>
     </div>
   )
 }
