@@ -13,8 +13,10 @@ export default function AboutPage() {
         <a target="_blank"  href="https://stackoverflow.com/users/127012/m-w-felker">Stack Overflow</a>
       </p>
 
-      <p>With over 17 years of experience, I am a trusted and versatile leader who knows how to:</p>
-      
+      <h2>I am a trusted and versatile leader</h2>
+
+      <p>My experience across verticals, industries, and technologies allow me to:</p>
+
       <ul>
         <li>Shape product visions and strategic opportunities at the executive level</li>
         <li>Drive holistic change management across organizations</li>
@@ -23,18 +25,19 @@ export default function AboutPage() {
         <li>Realize organizational capabilities through skills growth and talent acquisition</li>
       </ul>
 
-      <h2>I am a cloud native expert</h2>
-      <p>Check out my talk about using AI and cloud-native technology at Microsoft Build 2024:</p>
-      
-      <iframe src="https://www.youtube.com/embed/bLcykUmZNrQ?si=7m3ClFMH5nwMPHOH&amp;start=100" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-      <h2>I am a product leader</h2>
-
+      <p> Read my latest article on Agile best practices:</p>
       <p>
         <a href="https://maxfelker.medium.com/why-you-should-never-schedule-agile-ceremonies-on-monday-or-friday-e049fd51054e" target='_blank'>
         Why you should never schedule agile ceremonies on Monday or Friday (2 min read) - Medium
         </a>
       </p>
+
+      <h2>I am a cloud native expert</h2>
+      <p>Check out my talk about using AI and cloud-native technology at Microsoft Build 2024:</p>
+      
+      <iframe src="https://www.youtube.com/embed/bLcykUmZNrQ?si=7m3ClFMH5nwMPHOH&amp;start=100" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+     
 
       <h2>I build video games</h2>
 
