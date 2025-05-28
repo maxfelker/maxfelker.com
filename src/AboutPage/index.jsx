@@ -56,7 +56,7 @@ export default function AboutPage() {
 
       <p>Demo is free to try at <a target="_blank" href="https://terramajorgame.com/">terramajorgame.com</a></p>
 
-      <img src="src/AboutPage/terra-major-screencap.png" alt="Terramajor" />
+      <img src="/terra-major-screencap.png" alt="Terramajor" />
 
       <p><a href="/">Back Home</a></p>
     </div>
