@@ -35,12 +35,9 @@ p, strong, em, a {
 }
 
 body {
-	background: linear-gradient(-45deg,  #02000e, #000e30);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
 	height: 100vh;
 }
-
+/*
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
@@ -51,6 +48,75 @@ body {
 	100% {
 		background-position: 0% 50%;
 	}
+}*/
+
+
+/* Fade-In with Slide-Up */
+@keyframes fadeInSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
+/* Scale-Up Effect */
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
+/* Blur to Clear */
+@keyframes blurToClear {
+  0% {
+    filter: blur(10px);
+    opacity: 0;
+  }
+  100% {
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+/* Text Reveal with Mask */
+@keyframes reveal {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Common Animation Classes */
+.fade-in-slide-up {
+  animation: fadeInSlideUp 1s ease-out forwards;
+}
+
+.scale-up {
+  animation: scaleUp 0.8s ease-out forwards;
+}
+
+.blur-to-clear {
+  animation: blurToClear 1s ease-out forwards;
+}
+
+.text-reveal {
+  overflow: hidden;
+  display: inline-block;
+}
+
+.text-reveal span {
+  display: inline-block;
+  transform: translateY(100%);
+  animation: reveal 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
