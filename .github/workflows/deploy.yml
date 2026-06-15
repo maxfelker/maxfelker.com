@@ -3,11 +3,16 @@
 
 name: Build and deploy container app to Azure Web App - maxfelker
 
+# Fires when a version tag (e.g. v0.2) is pushed — created by a release/tag bump.
+# Builds the image, pushes it to ACR as :<version> and :latest, then deploys :<version>.
 on:
   push:
-    branches:
-      - may-2025
+    tags:
+      - 'v*'
   workflow_dispatch:
+
+env:
+  IMAGE: maxfelkershared.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_7ccb2219d146486b8ba8d718ca245fc9 }}/maxfelkershared/maxfelker.com
 
 jobs:
   build:
@@ -30,7 +35,9 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         push: true
-        tags: maxfelkershared.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_7ccb2219d146486b8ba8d718ca245fc9 }}/maxfelkershared/maxfelker.com:${{ github.sha }}
+        tags: |
+          ${{ env.IMAGE }}:${{ github.ref_name }}
+          ${{ env.IMAGE }}:latest
         file: ./Dockerfile
 
   deploy:
@@ -48,4 +55,4 @@ jobs:
         app-name: 'maxfelker'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_df9b10478edf480b92f2901a2198ebff }}
-        images: 'maxfelkershared.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_7ccb2219d146486b8ba8d718ca245fc9 }}/maxfelkershared/maxfelker.com:${{ github.sha }}'
+        images: '${{ env.IMAGE }}:${{ github.ref_name }}'
