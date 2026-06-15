@@ -4,7 +4,6 @@ import {
 } from "react-router-dom";
 import HomePage from "../HomePage";
 import AboutPage from '../AboutPage'
-import styles from './styles.module.css';
 
 const router = createBrowserRouter([
   {
@@ -19,9 +18,5 @@ const router = createBrowserRouter([
 
 export default function App() {
 
-  return (
-    <div className={styles.gradientBackground + ' fade-in-slide-up '}>
-      <RouterProvider router={router} />
-    </div>
-  )
+  return <RouterProvider router={router} />
 };
