@@ -25,6 +25,7 @@ export function parse(raw, path) {
 
 export const articles = Object.entries(files)
   .map(([path, raw]) => parse(raw, path))
+  .filter((a) => a.title) // ponytail: skip non-article files like README.md (no frontmatter)
   .sort((a, b) => new Date(b.date) - new Date(a.date))
 
 export const getArticle = (slug) => articles.find((a) => a.slug === slug)
