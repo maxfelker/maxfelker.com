@@ -1,6 +1,6 @@
 // Run: node src/articles.test.mjs
 import assert from 'node:assert'
-import { parse } from './articles.js'
+import { parse } from './frontmatter.js'
 
 const a = parse('---\ntitle: Hello World\ndate: 2024-02-15\n---\n# Body\n\nText.', 'x/my-slug.md')
 assert.equal(a.title, 'Hello World')
