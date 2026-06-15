@@ -1,0 +1,16 @@
+.content {
+  padding: 4rem;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 1080px) {
+  .content {
+    padding-top: 8rem;
+  }
+}
+
+.date {
+  opacity: 0.6;
+  margin-top: -0.5rem;
+}

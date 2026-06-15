@@ -21,6 +21,7 @@ services:
     volumes:
       - ./public:/app/public
       - ./src:/app/src
+      - ./articles:/app/articles
       - ./index.html:/app/index.html
       - ./manifest.json:/app/manifest.json
       - ./package.json:/app/package.json
