@@ -3,7 +3,7 @@
   line-height: 1.6;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #101010;
+  background-color: #010101;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -13,8 +13,14 @@
   --pad-inline: clamp(1rem, 5vw, 4rem);
 }
 
-body {
+body,
+#root {
   margin: 0;
+  min-height: 100dvh;
+  background-color: #010101; /* one uniform background everywhere — no lighter/darker split */
+}
+
+body {
   overflow-x: hidden; /* guard against any sub-pixel overflow from full-bleed media */
   overflow-wrap: break-word;
 }
