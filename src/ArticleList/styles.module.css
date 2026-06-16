@@ -1,0 +1,17 @@
+.articles {
+  list-style: none;
+  padding: 0;
+}
+
+.articles li {
+  margin-bottom: 2rem;
+}
+
+.articles a {
+  font-size: 1.2em;
+}
+
+.meta {
+  opacity: 0.6;
+  margin: 0.25rem 0;
+}
