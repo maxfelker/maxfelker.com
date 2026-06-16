@@ -1,6 +1,6 @@
 .content {
   padding:4rem;
-  max-width: 800px;  
+  max-width: 1040px;
   margin: 0rem auto;
 }
 
@@ -19,7 +19,7 @@ iframe, img {
 /* Default styling for larger screens */
 @media screen and (min-width: 1080px) {
   iframe, img {
-    max-width: 800px;
+    max-width: 1040px;
   }
 }
 
