@@ -1,12 +1,12 @@
 .content {
-  padding:4rem;
+  padding-inline: var(--pad-inline);
+  padding-block: 2rem;
   max-width: 845px;
-  margin: 0rem auto;
+  margin-inline: auto;
 }
 
 @media screen and (min-width: 1080px) {
   .content {
-    padding-top: 8rem;
+    padding-block-start: 8rem;
   }
-
 }
