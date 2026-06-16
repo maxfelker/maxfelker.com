@@ -1,12 +1,12 @@
 .content {
   padding: 4rem;
-  max-width: 680px;
+  max-width: 884px;
   margin: 0 auto;
 }
 
 @media screen and (min-width: 1080px) {
   .content {
-    padding-top: 8rem;
+    padding-top: 3rem;
   }
 }
 
