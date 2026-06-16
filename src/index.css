@@ -3,7 +3,7 @@
   line-height: 1.6;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #141414;
+  background-color: #101010;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -16,11 +16,14 @@ body {
 
 a {
   font-weight: 500;
-  color: #8a90ff;
+  color: #ff4ac8;
   text-decoration: underline;
 }
+a:visited {
+  color: #cc3ba0;
+}
 a:hover {
-  color: #b3b7ff;
+  color: #ff7ad6;
 }
 
 h1 {
