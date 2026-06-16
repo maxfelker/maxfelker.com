@@ -8,8 +8,10 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover" />
 
-    <!-- Mobile experience: lock the dark scheme, color the browser chrome, run app-like, and stop iOS auto-linking phone numbers -->
-    <meta name="color-scheme" content="dark" />
+    <!-- One uniform dark canvas from the first paint (before the bundled CSS loads), with no UA color-scheme tint. -->
+    <style>html,body,#root{background-color:#010101}</style>
+
+    <!-- Mobile experience: color the browser chrome, run app-like, and stop iOS auto-linking phone numbers -->
     <meta name="theme-color" content="#010101" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="mobile-web-app-capable" content="yes" />

@@ -11,16 +11,24 @@
   }
 }
 
+/* Mobile-first: stacked and centered (front and center). */
 .hero {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 1rem;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
   margin-block-end: 2.5rem;
 }
 
-.hero h1,
-.hero p {
+.heroText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hero h1 {
   margin: 0;
 }
 
@@ -51,10 +59,20 @@
   color: #010101;
 }
 
-/* Front and center on mobile through iPad mini. */
-@media screen and (max-width: 1024px) {
+/* Desktop: profile photo to the left of the tagline, left-aligned. */
+@media screen and (min-width: 1080px) {
   .hero {
+    flex-direction: row;
     align-items: center;
-    text-align: center;
+    text-align: left;
+    gap: 2.5rem;
+  }
+
+  .heroText {
+    align-items: flex-start;
+  }
+
+  .avatar {
+    flex-shrink: 0;
   }
 }
