@@ -13,7 +13,23 @@ export function parse(raw, path) {
     }
     body = match[2]
   }
-  const slug = meta.slug || path.split('/').pop().replace(/\.md$/, '')
+
+  const slug = meta.slug || slugFromPath(path)
+
+  // Images live next to index.md, so authors reference them by bare filename.
+  // Resolve those to the stable served path; leave absolute paths and full URLs alone.
+  const resolve = (src) => (/^(https?:|\/)/.test(src) ? src : `/articles/${slug}/${src}`)
+  if (meta.image) meta.image = resolve(meta.image)
+
   // ponytail: marked output is rendered as-is. Safe because articles are first-party Markdown in this repo, not user input.
-  return { ...meta, slug, html: marked.parse(body) }
+  const html = marked.parse(body).replace(/(<img\b[^>]*\bsrc=")([^"]+)(")/g, (_, a, src, b) => a + resolve(src) + b)
+
+  return { ...meta, slug, html }
+}
+
+// articles/<slug>/index.md -> <slug>; legacy articles/<slug>.md -> <slug>
+function slugFromPath(path) {
+  const parts = path.split('/')
+  const file = parts.pop()
+  return file === 'index.md' ? parts.pop() : file.replace(/\.md$/, '')
 }
