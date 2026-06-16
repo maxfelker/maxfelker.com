@@ -7,6 +7,54 @@
 
 @media screen and (min-width: 1080px) {
   .content {
-    padding-block-start: 8rem;
+    padding-block-start: 6rem;
+  }
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-block-end: 2.5rem;
+}
+
+.hero h1,
+.hero p {
+  margin: 0;
+}
+
+.avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  transform: rotate(180deg); /* upside down, per request */
+}
+
+.cta {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  background-color: #ff4ac8;
+  color: #010101;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.cta:visited {
+  color: #010101;
+}
+
+.cta:hover {
+  background-color: #ff7ad6;
+  color: #010101;
+}
+
+/* Front and center on mobile through iPad mini. */
+@media screen and (max-width: 1024px) {
+  .hero {
+    align-items: center;
+    text-align: center;
   }
 }
