@@ -43,7 +43,8 @@ for (const slug of slugs) {
   const url = `${SITE}/article/${a.slug}`
   const title = esc(a.title)
   const desc = esc(a.summary)
-  const image = a.image ? (a.image.startsWith('http') ? a.image : SITE + a.image) : null
+  // Preview image: explicit hero, else the embedded video's thumbnail (a.ogImage). Absolutize site-relative paths.
+  const image = a.ogImage ? (a.ogImage.startsWith('http') ? a.ogImage : SITE + a.ogImage) : null
 
   let html = shell
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${title} — Max Felker</title>`)
