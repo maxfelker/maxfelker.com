@@ -1,29 +1,62 @@
 :root {
+  /* Declare the scheme so Chrome's Auto Dark Theme leaves the page alone — otherwise
+     force-dark lifts the #010101 element backgrounds to ~#060606 while the root canvas
+     stays #010101, producing a visible lighter/darker split. */
+  color-scheme: dark;
   font-family: Heebo, system-ui, Helvetica, Arial, sans-serif;
   line-height: 1.6;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #141414;
+  background-color: #010101;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  /* Fluid side padding: matches the 2rem top/bottom on phones, grows to 4rem on desktop. */
+  --pad-inline: clamp(2rem, 5vw, 4rem);
+}
+
+body,
+#root {
+  margin: 0;
+  min-height: 100dvh;
+  background-color: #010101; /* one uniform background everywhere — no lighter/darker split */
 }
 
 body {
-  margin: 0;
+  overflow-x: hidden; /* guard against any sub-pixel overflow from full-bleed media */
+  overflow-wrap: break-word;
+}
+
+/* Consistent ~1rem vertical rhythm between blocks, in rems. */
+p,
+ul,
+ol {
+  margin-block: 0 1rem;
+}
+
+h2,
+h3 {
+  margin-block: 1.5rem 1rem;
+  line-height: 1.2;
+}
+
+/* Page title: no top margin so it sits at the content padding, not below extra space. */
+h1 {
+  margin-block: 0 1rem;
+  line-height: 1.2;
+  font-size: clamp(1.8rem, 6vw, 2.4rem); /* fluid: fits long titles on phones, scales up on desktop */
 }
 
 a {
   font-weight: 500;
-  color: #8a90ff;
+  color: #ff4ac8;
   text-decoration: underline;
 }
-a:hover {
-  color: #b3b7ff;
+a:visited {
+  color: #cc3ba0;
 }
-
-h1 {
-  font-size: 2.4em;
-  line-height: 1.2;
+a:hover {
+  color: #ff7ad6;
 }

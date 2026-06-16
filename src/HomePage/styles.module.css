@@ -1,12 +1,78 @@
 .content {
-  padding:4rem;
+  padding-inline: var(--pad-inline);
+  padding-block: 2rem;
   max-width: 845px;
-  margin: 0rem auto;
+  margin-inline: auto;
 }
 
 @media screen and (min-width: 1080px) {
   .content {
-    padding-top: 8rem;
+    padding-block-start: 6rem;
+  }
+}
+
+/* Mobile-first: stacked and centered (front and center). */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  margin-block-end: 2.5rem;
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hero h1 {
+  margin: 0;
+}
+
+.avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  /*transform: rotate(180deg); upside down already in picture */
+}
+
+.cta {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  background-color: #ff4ac8;
+  color: #010101;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.cta:visited {
+  color: #010101;
+}
+
+.cta:hover {
+  background-color: #ff7ad6;
+  color: #010101;
+}
+
+/* Desktop: profile photo to the left of the tagline, left-aligned. */
+@media screen and (min-width: 1080px) {
+  .hero {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: 2.5rem;
   }
 
+  .heroText {
+    align-items: flex-start;
+  }
+
+  .avatar {
+    flex-shrink: 0;
+  }
 }

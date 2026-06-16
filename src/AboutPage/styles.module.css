@@ -1,39 +1,29 @@
 .content {
-  padding:4rem;
+  padding-inline: var(--pad-inline);
+  padding-block: 2rem;
   max-width: 1040px;
-  margin: 0rem auto;
+  margin-inline: auto;
 }
 
 @media screen and (min-width: 1080px) {
   .content {
-    padding-top: 8rem;
-  }  
-    
+    padding-block-start: 8rem;
+  }
 }
 
-iframe, img {
+.content iframe,
+.content img {
+  display: block;
   max-width: 100%;
-  min-height: 200px;
+  height: auto;
 }
 
-/* Default styling for larger screens */
-@media screen and (min-width: 1080px) {
-  iframe, img {
-    max-width: 1040px;
-  }
-}
-
-/* Styling for portrait phones */
-@media screen and (max-width: 480px) and (orientation: portrait) {
-  iframe, img {
-    max-width: 300px;
-  }
-}
-
-/* Styling for landscape phones */
-@media screen and (orientation: landscape) {
-  iframe, img {
-    min-height: 450px;
-    width: 100%;
+/* Full-bleed media on phones and up to an iPad mini (portrait and landscape). */
+@media screen and (max-width: 1024px) {
+  .content iframe,
+  .content img {
+    width: 100vw;
+    max-width: 100vw;
+    margin-inline: calc(50% - 50vw);
   }
 }
