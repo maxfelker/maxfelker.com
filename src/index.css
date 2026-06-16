@@ -1,4 +1,8 @@
 :root {
+  /* Declare the scheme so Chrome's Auto Dark Theme leaves the page alone — otherwise
+     force-dark lifts the #010101 element backgrounds to ~#060606 while the root canvas
+     stays #010101, producing a visible lighter/darker split. */
+  color-scheme: dark;
   font-family: Heebo, system-ui, Helvetica, Arial, sans-serif;
   line-height: 1.6;
   font-weight: 400;
