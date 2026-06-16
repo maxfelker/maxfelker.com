@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
 import { articles } from '../articles'
+import ArticleList from '../ArticleList'
 import styles from './styles.module.css'
 
 export default function HomePage() {
@@ -13,20 +13,7 @@ export default function HomePage() {
       
       <p>Learn more <a href="/about">about me</a>.</p>
 
-      {articles.length > 0 && (
-        <>
-          <h2>Latest articles</h2>
-          <ul className={styles.articles}>
-            {articles.map((a) => (
-              <li key={a.slug}>
-                <Link to={`/article/${a.slug}`}>{a.title}</Link>
-                <p className={styles.meta}>{a.date}</p>
-                <p>{a.summary}</p>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
+      <ArticleList articles={articles} />
 
     </div>
   )
