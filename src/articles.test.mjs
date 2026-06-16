@@ -10,8 +10,17 @@ const a = parse(
 assert.equal(a.title, 'Hello World')
 assert.equal(a.slug, 'my-slug')                       // from the folder name
 assert.equal(a.image, '/articles/my-slug/hero.jpg')   // bare hero resolved
+assert.equal(a.ogImage, '/articles/my-slug/hero.jpg') // explicit hero is the preview image
 assert.ok(a.html.includes('<h1>Body</h1>'))
 assert.ok(a.html.includes('src="/articles/my-slug/fig.png"')) // inline image resolved
+
+// video article with no hero: preview falls back to the YouTube thumbnail, no displayed hero
+const v = parse(
+  '---\ntitle: Talk\ndate: 2024-05-24\n---\n<iframe src="https://www.youtube.com/embed/bLcykUmZNrQ"></iframe>',
+  'articles/talk/index.md',
+)
+assert.equal(v.image, undefined) // nothing rendered as a hero
+assert.equal(v.ogImage, 'https://img.youtube.com/vi/bLcykUmZNrQ/maxresdefault.jpg')
 
 // absolute paths and full URLs are left untouched
 const b = parse('---\ntitle: T\nimage: /custom/x.jpg\n---\n![a](https://cdn/y.png)', 'articles/t/index.md')

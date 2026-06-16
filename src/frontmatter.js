@@ -19,12 +19,16 @@ export function parse(raw, path) {
   // Images live next to index.md, so authors reference them by bare filename.
   // Resolve those to the stable served path; leave absolute paths and full URLs alone.
   const resolve = (src) => (/^(https?:|\/)/.test(src) ? src : `/articles/${slug}/${src}`)
-  if (meta.image) meta.image = resolve(meta.image)
+  const image = meta.image ? resolve(meta.image) : undefined
 
   // ponytail: marked output is rendered as-is. Safe because articles are first-party Markdown in this repo, not user input.
   const html = marked.parse(body).replace(/(<img\b[^>]*\bsrc=")([^"]+)(")/g, (_, a, src, b) => a + resolve(src) + b)
 
-  return { ...meta, slug, html }
+  // Link-preview image: an explicit hero wins; otherwise fall back to a YouTube thumbnail
+  // when the article embeds a video (so video articles unfurl with a rich card).
+  const ogImage = image || youTubeThumbnail(html) || undefined
+
+  return { ...meta, slug, image, html, ogImage }
 }
 
 // articles/<slug>/index.md -> <slug>; legacy articles/<slug>.md -> <slug>
@@ -32,4 +36,10 @@ function slugFromPath(path) {
   const parts = path.split('/')
   const file = parts.pop()
   return file === 'index.md' ? parts.pop() : file.replace(/\.md$/, '')
+}
+
+// Pull the 11-char video id out of an embed/watch/share URL and return its hi-res thumbnail.
+export function youTubeThumbnail(html) {
+  const m = html.match(/(?:youtube\.com\/embed\/|youtu\.be\/|[?&]v=)([\w-]{11})/)
+  return m ? `https://img.youtube.com/vi/${m[1]}/maxresdefault.jpg` : null
 }
