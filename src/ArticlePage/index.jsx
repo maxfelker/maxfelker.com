@@ -19,6 +19,7 @@ export default function ArticlePage() {
     <div className={styles.content}>
       <h1>{article.title}</h1>
       <p className={styles.date}>{article.date}</p>
+      {article.image && <img className={styles.hero} src={article.image} alt={article.title} />}
       {/* ponytail: first-party Markdown from this repo, not user input — safe to render directly. */}
       <div dangerouslySetInnerHTML={{ __html: article.html }} />
       <p><Link to="/">Back home</Link></p>

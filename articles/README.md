@@ -27,6 +27,16 @@ Body goes here in **Markdown**.
 | `summary` | yes      | Short description for listings and link previews.            |
 | `date`    | yes      | `YYYY-MM-DD`. Drives ordering — newest first.                |
 | `slug`    | no       | URL is `/article/<slug>`. Defaults to the filename.          |
-| `image`   | no       | Optional social-preview image (used by later preview work).  |
+| `image`   | no       | Hero image. Shown at the top of the article AND used as the link-preview (OG/Twitter) image. |
 
 The article appears in the list and at `/article/<slug>` after a rebuild. That's it.
+
+## Images
+
+Put image files in `public/` — they're served from the site root. The convention is
+`public/articles/<slug>/`, referenced with an absolute path:
+
+- **Hero / preview image:** set `image: /articles/<slug>/hero.jpg` in the frontmatter.
+  Use ~1200×630 for the best social-card crop.
+- **Inline images:** standard Markdown in the body —
+  `![alt text](/articles/<slug>/figure.jpg)`. They scale to the column width automatically.

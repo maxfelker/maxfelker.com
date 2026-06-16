@@ -14,3 +14,15 @@
   opacity: 0.6;
   margin-top: -0.5rem;
 }
+
+.hero {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+/* Body images (rendered from Markdown) stay within the column. */
+.content img {
+  max-width: 100%;
+  height: auto;
+}
