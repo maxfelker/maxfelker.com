@@ -5,12 +5,6 @@
   margin-inline: auto;
 }
 
-@media screen and (min-width: 1080px) {
-  .content {
-    padding-block-start: 3rem;
-  }
-}
-
 .date {
   opacity: 0.6;
   margin-top: -0.5rem;

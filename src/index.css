@@ -9,8 +9,8 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  /* Fluid page padding: ~1rem on phones, up to 4rem on desktop — no breakpoint needed. */
-  --pad-inline: clamp(1rem, 5vw, 4rem);
+  /* Fluid side padding: matches the 2rem top/bottom on phones, grows to 4rem on desktop. */
+  --pad-inline: clamp(2rem, 5vw, 4rem);
 }
 
 body,
@@ -32,11 +32,17 @@ ol {
   margin-block: 0 1rem;
 }
 
-h1,
 h2,
 h3 {
   margin-block: 1.5rem 1rem;
   line-height: 1.2;
+}
+
+/* Page title: no top margin so it sits at the content padding, not below extra space. */
+h1 {
+  margin-block: 0 1rem;
+  line-height: 1.2;
+  font-size: clamp(1.8rem, 6vw, 2.4rem); /* fluid: fits long titles on phones, scales up on desktop */
 }
 
 a {
@@ -49,8 +55,4 @@ a:visited {
 }
 a:hover {
   color: #ff7ad6;
-}
-
-h1 {
-  font-size: clamp(1.8rem, 6vw, 2.4rem); /* fluid: fits long titles on phones, scales up on desktop */
 }
