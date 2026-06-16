@@ -29,7 +29,7 @@
   height: 160px;
   border-radius: 50%;
   object-fit: cover;
-  transform: rotate(180deg); /* upside down, per request */
+  /*transform: rotate(180deg); upside down already in picture */
 }
 
 .cta {

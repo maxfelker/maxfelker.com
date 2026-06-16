@@ -10,8 +10,7 @@ export default function HomePage() {
     <div className={styles.content}>
       <header className={styles.hero}>
         <img className={styles.avatar} src={profilePic} alt="Max Felker" />
-        <h1>Realizing the art of the possible</h1>
-        <p>My name is Max.</p>
+        <h1>My name is Max and my super power is realizing the art of the possible</h1>
         <Link className={styles.cta} to="/about">Learn More</Link>
       </header>
 
