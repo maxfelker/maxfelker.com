@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background-color: #010101">
+
   <head>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo" />
@@ -8,10 +9,8 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover" />
 
-    <!-- One uniform dark canvas from the first paint (before the bundled CSS loads), with no UA color-scheme tint. -->
-    <style>html,body,#root{background-color:#010101}</style>
-
     <!-- Mobile experience: color the browser chrome, run app-like, and stop iOS auto-linking phone numbers -->
+    <!-- (the dark canvas is set via the inline background on <html> above so it paints before the bundled CSS) -->
     <meta name="theme-color" content="#010101" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="mobile-web-app-capable" content="yes" />
