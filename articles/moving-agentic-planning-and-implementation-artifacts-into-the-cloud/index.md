@@ -112,3 +112,79 @@ Those releases became another layer of durable, public record: anyone can read t
 Everything lived in one place. The epic held the vision, the features held the scope, the tasks held the implementation detail, the PR threads held the review-and-respond loop, the issue comments held the debugging (screenshots included), and the releases held the history. I bounced between ChatGPT, Claude, and Copilot across the whole project and never once worried about which tool had the current version of the plan because the plan was never in a tool. It was in GitHub, where every human and every agent could read it, write to it, and pick up exactly where the last one left off.
 
 This isn't just demonstrating that agents can work in parallel - it's also that that humans stay active participants in the process. The future of software development isn't humans working off to one side while AI works on the other. It's humans and AI operating from the same source of truth. The technology already exists and the evolution it's putting information where both people and agents can see it in one place.
+
+## Do it yourself: GitHub, Claude Code, and some simple prompts
+
+You don't need a complex process to try this. Start with one repo, one product idea, the GitHub CLI, and an agentic coding tool that can use the command line. The example below uses GitHub, `gh`, and Claude Code from the terminal (or inside VS Code), but the same pattern works with Azure DevOps through `az`, GitHub Copilot CLI, Cursor, Gemini, or any other agentic tool that can read and write to the platform where your team manages work.
+
+The goal is simple: turn an idea into an epic, break the epic into feature sub-issues, break each feature into task sub-issues, implement the work through pull requests, and keep the feedback in issues, PRs, comments, tags, and releases. The important part isn't Claude specifically — it's that the agent can use the terminal, read the repo, call `gh`, create issues, create branches, commit changes, open pull requests, and comment back into GitHub. Markdown is still handy as scratch space, but it shouldn't become the durable place where the plan lives.
+
+First, make sure the GitHub CLI is installed and authenticated:
+
+```bash
+gh auth login
+```
+
+You also need Claude Code installed and available wherever you're working with the repo. Don't spend time building the perfect issue taxonomy before you start — you can just ask the agent to label things as `epic`, `feature`, or `task` as it creates them. The point is to make the work visible, structured, and connected.
+
+### 1. Create the epic
+
+Start with the idea. It can come from a product conversation, a voice transcript, a customer problem, a planning doc, or a rough note. Ask the agent to turn it into an epic issue. The epic isn't the implementation plan — it's the shared source of truth for the outcome you're trying to create.
+
+```text
+Take the following idea and turn it into a GitHub epic issue. Keep it simple, clear, and human readable. The epic should explain the why and the overarching what in prose, including what we are building, why it matters, who it is for, what is in scope, what is out of scope, and what success looks like. The epic may cover more than one persona or outcome. At the bottom of the issue, add an Acceptance Criteria section that describes the feature issues that need to exist for the epic to be complete. Create the issue in GitHub using the GitHub CLI and label it as an epic. Idea: [PASTE IDEA HERE]
+```
+
+### 2. Break the epic into feature sub-issues
+
+Once the epic exists, ask the agent to break it into feature sub-issues. Each feature should represent one meaningful piece of the product that can be reviewed and shipped on its own. This gives the team a real backlog instead of a plan buried in a terminal session or a markdown file. The epic holds the goal; the feature sub-issues hold the major pieces of scope.
+
+```text
+Read GitHub issue #EPIC_NUMBER and break it into feature sub-issues. Each feature should be created as a sub-issue of the epic, serve a single persona where possible, deliver one concrete end-to-end capability, and be labeled as a feature. Keep the feature titles simple and specific. If a feature title needs an "and" or an "or," split it into separate features. Each feature issue should explain the expected behavior in human-readable prose and include an Acceptance Criteria section at the bottom that describes the task sub-issues required for the feature to be complete. After creating the feature sub-issues, update the epic Acceptance Criteria section so the feature titles represent the criteria for completing the epic.
+```
+
+### 3. Break each feature into task sub-issues
+
+With the features clear, break each one into task sub-issues that are concrete enough for a developer or agent to pick up and implement. The task issue carries the implementation guidance — that's the key shift. Instead of putting the plan in a markdown file that only the local agent sees, you put it in GitHub where humans and other agents can find it.
+
+```text
+Read GitHub issue #FEATURE_NUMBER and break it into technical task sub-issues. Each task should be created as a sub-issue of the feature, describe one concrete engineering step, include enough implementation guidance to start, explain how to validate the work, include clear done criteria, and be labeled as a task. Keep the tasks simple and useful. Do not create fake tasks. If the feature is small enough to implement directly, say that instead of forcing a task breakdown. After creating the task sub-issues, update the feature Acceptance Criteria section so the task titles represent the criteria for completing the feature.
+```
+
+### 4. Implement one issue at a time
+
+When the backlog is ready, point Claude Code at one issue and have it work from GitHub. The agent should read the issue, read the linked parent and child issues, create a branch, implement the scoped change, commit incrementally, push the branch, and open a pull request. The branch and PR map back to the issue, which keeps the relationship between the plan and the implementation obvious.
+
+```text
+Implement GitHub issue #ISSUE_NUMBER. Before writing code, read the issue, read any parent issue, read any child sub-issues, summarize the implementation approach, and call out anything unclear before proceeding. Then create a branch for this issue, make the smallest reasonable code changes, commit incrementally as meaningful progress is made, push the branch, and open a pull request for this issue. The pull request should explain what changed, which issue it closes, how it was validated, and any follow-up work.
+```
+
+### 5. Make one pull request per issue
+
+Keep the pull request focused. The issue explains why the work exists and what needs to happen; the pull request shows how the work was implemented. That separation keeps the PR from turning into the planning system, so reviewers can validate the code change without sorting through every planning decision that led to it.
+
+```text
+Open a pull request for the current branch. The PR should link to the issue it implements, summarize the code changes, explain how the work was validated, call out any tradeoffs, and use a closing keyword so the issue is closed when the PR merges. Keep the PR focused on the implementation. Do not move the full plan into the PR. The planning context should stay in the issue and its sub-issues.
+```
+
+### 6. Put feedback in comments, not markdown files
+
+When someone has feedback, put it into the issue or PR thread — design notes, screenshots, bug reports, tradeoff decisions, review comments, all of it. The agent can then read the thread, make the change, and report back in the same place. This is where the workflow starts to compound: the issue and PR threads become the durable record of the collaboration. A developer can read it, a TPM can read it, and another agent can pick it up later without needing the original chat or terminal session.
+
+```text
+Read the latest comments on issue or PR #NUMBER. For each comment, decide whether it is actionable, make the needed change if it is clear, ask for clarification if it is not clear, push any code updates to the existing branch, and comment back in GitHub with what changed and how it was validated. Do not store the response only in a local markdown file. Put the update back into the GitHub issue or PR thread.
+```
+
+### 7. Create the release and git tag from the work record
+
+When the work is ready to ship, use the issues and PRs to create the release. The release should summarize what shipped, what changed, and which issues were completed since the last release. It becomes another durable artifact in the same system: the epic explains the intent, the feature issues explain the scope, the task issues explain the implementation path, the PRs validate the code, the comments capture the collaboration, and the release records what shipped.
+
+```text
+Create the next GitHub release and git tag from the work record. Find the latest GitHub release and latest git tag, review all issues closed and pull requests merged since that release, and determine whether the next version should be a major or minor version bump based on the scope of the changes. Use the closed issues, merged pull requests, important issue comments, important PR comments, and implementation notes captured in GitHub to write release notes that explain what shipped, what was fixed, what changed technically, which issues and PRs are included, and any known follow-up work. Show me the proposed version number and release notes before creating the tag or GitHub release, then create the git tag and GitHub release after I approve them, and comment on the related epic and feature issues with a link to the release.
+```
+
+### The rule
+
+If the information matters to the work, put it in GitHub. The epic holds the product intent. The feature sub-issues hold the scope and act as the epic's acceptance criteria. The task sub-issues hold the implementation guidance and act as the feature's acceptance criteria. The pull requests hold the code review. The comments hold the discussion. The releases hold the history.
+
+The point isn't to stop using markdown. It's to stop making local markdown the source of truth for work that other humans and agents need to understand.
