@@ -1,19 +1,20 @@
 # Articles
 
-Each article is a folder holding its Markdown and its images together. Vite reads them
-at build time (`src/articles.js`) — no CMS, no build step beyond `npm run build`.
+Each article is a folder holding its Markdown and its images together. The file is named
+`README.md` so the article also reads well as a folder on GitHub. Vite reads them at
+build time (`src/articles.js`) — no CMS, no build step beyond `npm run build`.
 
 ```
 articles/
   your-article-slug/
-    index.md
+    README.md
     hero.jpg
     figure.jpg
 ```
 
 ## Add an article
 
-1. Create `articles/<slug>/index.md`. The folder name is the URL slug (`/article/<slug>`).
+1. Create `articles/<slug>/README.md`. The folder name is the URL slug (`/article/<slug>`).
 2. Start with frontmatter, then write the body in Markdown:
 
 ```markdown
