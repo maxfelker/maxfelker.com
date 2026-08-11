@@ -7,37 +7,24 @@ export default function AboutPage() {
       <h1>Max Felker</h1>
 
       <p>
-        <a target="_blank" href="https://linkedin.com/in/mwfelker">LinkedIn</a> • {" "}
-        <a target="_blank"  href="https://github.com/mw-felker">GitHub</a> • {" "}
-        <a target="_blank"  href="https://twitter.com/mwfelker">Twitter</a> • {" "}
+        <a target="_blank" href="https://linkedin.com/in/maxfelker">LinkedIn</a> • {" "}
+        <a target="_blank"  href="https://github.com/maxfelker">GitHub</a> • {" "}
         <a target="_blank"  href="https://stackoverflow.com/users/127012/m-w-felker">Stack Overflow</a>
       </p>
 
       <h2>I am a trusted and versatile leader</h2>
 
-      <p>My experience across verticals, industries, and technologies allow me to:</p>
+      <p>My super power is realizing the art-of-the-possible. With two decades of experience in technology across disciplines and industries, I am a trusted leader who knows how to take ideas from 0 to 1 and products from 1 to 10. My day to day looks like:</p>
 
       <ul>
-        <li>Shape product visions and strategic opportunities at the executive level</li>
-        <li>Drive holistic change management across organizations</li>
-        <li>Ship rapid prototypes and best-in-class engineering solutions on time</li>
-        <li>Optimize agile software development lifecycles at scale</li>
-        <li>Realize organizational capabilities through skills growth and talent acquisition</li>
+        <li>Shaping product visions and strategic opportunities at the executive level</li>
+        <li>Driving holistic change management across organizations</li>
+        <li>Shipping both rapid prototypes and best-in-class engineering solutions on time</li>
+        <li>Optimizing agile software development lifecycles at scale</li>
+        <li>Realizing organizational capabilities through employee skills growth and talent acquisition</li>
       </ul>
 
-      <p> Read my latest article on Agile best practices:</p>
-      <p>
-        <a href="https://maxfelker.medium.com/why-you-should-never-schedule-agile-ceremonies-on-monday-or-friday-e049fd51054e" target='_blank'>
-        Why you should never schedule agile ceremonies on Monday or Friday (2 min read) - Medium
-        </a>
-      </p>
-
-      <h2>I am a cloud native expert</h2>
-      <p>Check out my talk about using AI and cloud-native technology at Microsoft Build 2024:</p>
-      
-      <iframe src="https://www.youtube.com/embed/bLcykUmZNrQ?si=7m3ClFMH5nwMPHOH&amp;start=100" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-     
+      <p>I currently work at the <a target="_blank" href="https://www.microsoft.com/en-us/frontier-company">Microsoft Frontier Company</a> as a Principal Technical Program Manager in the financial services sector. In the past, I have worked in health care, commercial retail, mixed reality, and startup /verticals.</p>
 
       <h2>I build video games</h2>
 
@@ -47,6 +34,14 @@ export default function AboutPage() {
 
       <p>My daughter is a big fan of the Goal Simulator game series but always asked to play as a unicorn. After finding that there were no unicorn games on the market, I decided to build one. The Unicorn Game is a 3D third-person game where players explore the world as different types of unicorns.</p>
       <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7325987873235636225?compact=1" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+
+      <h3>Web-native terrain generator demo</h3>
+
+      <p>I took an infinite-terrain generator I originally built in Unity 6 years ago and rebuilt it as a web-native application using React, Go/WASM, WebGPU, and then deployed it to Azure. The project is an exploration of the art of the possible: what happens when a traditional game-engine workload is rethought around modern browser, cloud, and GPU-native technologies. It is open source on <a target="_blank" href="https://github.com/maxfelker/terrain-webgpu">GitHub</a>, playable live, and still evolving as I experiment with capabilities such as biome stitching.</p>
+
+<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7440113627061379072?compact=1" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+
+      <p><a target="_blank" href="https://terrain-gpu-demo.azurewebsites.net/">See the live demo in your browser</a></p>
 
       <h3>Terra Major</h3>
 
