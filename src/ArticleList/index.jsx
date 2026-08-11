@@ -10,7 +10,9 @@ export default function ArticleList({ articles }) {
       <ul className={styles.articles}>
         {articles.map((article) => (
           <li key={article.slug}>
-            <Link to={`/article/${article.slug}`}>{article.title}</Link>
+            {article.link
+              ? <a href={article.link} target="_blank" rel="noopener noreferrer">{article.title}</a>
+              : <Link to={`/article/${article.slug}`}>{article.title}</Link>}
             <p className={styles.meta}>{article.date}</p>
             <p>{article.summary}</p>
           </li>

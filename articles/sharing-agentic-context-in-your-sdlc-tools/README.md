@@ -1,7 +1,7 @@
 ---
 title: Share agentic context in your SDLC tools instead of committing markdown files
-summary: Push all agentic output into your SDLC tools as tickets and comments to share context instead of capturing them as markdown files
-date: 2026-06-16
+summary: Push all agentic output into your SDLC tools as tickets and comments to share context instead of capturing them as markdown files. This creates a near-real-time source of truth for humans and agents alike, making it accessible to everyone involved in the lifecycle.
+date: 2026-08-12
 ---
 
 **TL;DR:** Push all agentic output into your SDLC tools as tickets and comments to share context instead of capturing them as markdown files. This creates a near-real-time source of truth for humans and agents alike, making it accessible to everyone involved in the lifecycle.
