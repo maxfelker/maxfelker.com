@@ -24,9 +24,10 @@ export function parse(raw, path) {
   // ponytail: marked output is rendered as-is. Safe because articles are first-party Markdown in this repo, not user input.
   const html = marked.parse(body).replace(/(<img\b[^>]*\bsrc=")([^"]+)(")/g, (_, a, src, b) => a + resolve(src) + b)
 
-  // Link-preview image: an explicit hero wins; otherwise fall back to a YouTube thumbnail
-  // when the article embeds a video (so video articles unfurl with a rich card).
-  const ogImage = image || youTubeThumbnail(html) || undefined
+  // Link-preview image: explicit hero wins, then a YouTube thumbnail for video articles,
+  // then the first inline image in the body (e.g. a GIF used as the de facto hero)
+  // so link unfurls (iMessage/SMS) still get a card without extra frontmatter.
+  const ogImage = image || youTubeThumbnail(html) || firstImage(html) || undefined
 
   return { ...meta, slug, image, html, ogImage }
 }
@@ -36,6 +37,12 @@ function slugFromPath(path) {
   const parts = path.split('/')
   const file = parts.pop()
   return file === 'README.md' ? parts.pop() : file.replace(/\.md$/, '')
+}
+
+// First <img> src in the rendered body, already resolved to a served path.
+function firstImage(html) {
+  const m = html.match(/<img\b[^>]*\bsrc="([^"]+)"/)
+  return m ? m[1] : null
 }
 
 // Pull the 11-char video id out of an embed/watch/share URL and return its hi-res thumbnail.
