@@ -22,6 +22,14 @@ const v = parse(
 assert.equal(v.image, undefined) // nothing rendered as a hero
 assert.equal(v.ogImage, 'https://img.youtube.com/vi/bLcykUmZNrQ/maxresdefault.jpg')
 
+// gif embedded in the body with no explicit hero: preview falls back to it (fixes #42 — no unfurl on iMessage/SMS)
+const g = parse(
+  '---\ntitle: Workflow\ndate: 2026-06-16\n---\n![demo](./workflow.gif)',
+  'articles/workflow/README.md',
+)
+assert.equal(g.image, undefined) // still no displayed hero
+assert.equal(g.ogImage, '/articles/workflow/./workflow.gif')
+
 // absolute paths and full URLs are left untouched
 const b = parse('---\ntitle: T\nimage: /custom/x.jpg\n---\n![a](https://cdn/y.png)', 'articles/t/README.md')
 assert.equal(b.image, '/custom/x.jpg')
