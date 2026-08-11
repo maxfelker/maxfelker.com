@@ -8,7 +8,7 @@ date: 2026-06-16
 
 _Skip to the bottom to find the copy/paste examples if you're ready to rock & roll_
 
-![An example of issue in GitHub](./hero.png)
+![An example of the workflow in GitHub](./workflow.gif)
 
 ## Understanding the problem
 
@@ -73,11 +73,11 @@ This broke down each goal of the epic into  **feature issues** with each issue l
 
 From there I switched to Claude to have it revise the epic and the features with Opus 4.8 which I love when building out high-quality requirements. One of the caveats with the GPT Pro voice with GitHub connector is that it _can't create sub issues_ so I had Claude re-classify the feature issues as sub-issues through the `gh` command line tool.
 
-![Revising requirements and creating sub-issues in Claude Code CLI](./claude-gh-sub-issues.png)
+![Revising requirements and creating sub-issues in Claude Code CLI](./claude-gh-issues.png)
 
 Next, I turned on [`ponytail` from Dietrich Gebert](https://github.com/DietrichGebert/ponytail/) to review the sub-issues and created the **task sub-issues** beneath those. These represent the concrete engineering steps with technical implementation guidance attached. Feature #3 alone became five tasks (#11–#15): upgrade Vite, upgrade React and the router, bump the Docker base images, update the GitHub Actions, strip the gradient animation. 
 
-![Subissues in GitHub](./hero.png)
+![Subissues in GitHub](./github-issues.png)
 
 By the time the planning was done, the whole hierarchy — epic → features → tasks — existed as a navigable backlog in GitHub that I never had to assemble by hand, and that anyone could read without cloning the repo.
 
