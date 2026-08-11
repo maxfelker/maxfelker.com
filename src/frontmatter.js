@@ -16,7 +16,7 @@ export function parse(raw, path) {
 
   const slug = meta.slug || slugFromPath(path)
 
-  // Images live next to index.md, so authors reference them by bare filename.
+  // Images live next to README.md, so authors reference them by bare filename.
   // Resolve those to the stable served path; leave absolute paths and full URLs alone.
   const resolve = (src) => (/^(https?:|\/)/.test(src) ? src : `/articles/${slug}/${src}`)
   const image = meta.image ? resolve(meta.image) : undefined
@@ -31,11 +31,11 @@ export function parse(raw, path) {
   return { ...meta, slug, image, html, ogImage }
 }
 
-// articles/<slug>/index.md -> <slug>; legacy articles/<slug>.md -> <slug>
+// articles/<slug>/README.md -> <slug>; legacy articles/<slug>.md -> <slug>
 function slugFromPath(path) {
   const parts = path.split('/')
   const file = parts.pop()
-  return file === 'index.md' ? parts.pop() : file.replace(/\.md$/, '')
+  return file === 'README.md' ? parts.pop() : file.replace(/\.md$/, '')
 }
 
 // Pull the 11-char video id out of an embed/watch/share URL and return its hi-res thumbnail.

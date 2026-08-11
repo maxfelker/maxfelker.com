@@ -20,17 +20,17 @@ const IMAGE = /\.(png|jpe?g|gif|webp|svg)$/i
 const esc = (s = '') => s.replace(/"/g, '&quot;')
 const shell = readFileSync(join(DIST, 'index.html'), 'utf8')
 
-// Each article is a directory: articles/<slug>/index.md (+ images alongside).
+// Each article is a directory: articles/<slug>/README.md (+ images alongside).
 const slugs = readdirSync(ARTICLES).filter((name) => {
   const dir = join(ARTICLES, name)
-  try { return statSync(dir).isDirectory() && statSync(join(dir, 'index.md')).isFile() }
+  try { return statSync(dir).isDirectory() && statSync(join(dir, 'README.md')).isFile() }
   catch { return false }
 })
 
 let count = 0
 for (const slug of slugs) {
   const dir = join(ARTICLES, slug)
-  const a = parse(readFileSync(join(dir, 'index.md'), 'utf8'), join(dir, 'index.md'))
+  const a = parse(readFileSync(join(dir, 'README.md'), 'utf8'), join(dir, 'README.md'))
   if (!a.title) continue
 
   // Copy co-located images to the stable served path.
