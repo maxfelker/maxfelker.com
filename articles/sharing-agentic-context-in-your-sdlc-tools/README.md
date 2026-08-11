@@ -1,5 +1,5 @@
 ---
-title: Share agentic context in your SDLC tools instead of committing markdown filess
+title: Share agentic context in your SDLC tools instead of committing markdown files
 summary: Push all agentic output into your SDLC tools as tickets and comments to share context instead of capturing them as markdown files
 date: 2026-06-16
 ---
@@ -12,7 +12,7 @@ _Skip to the bottom to find the copy/paste examples if you're ready to rock & ro
 
 ## Understanding the problem
 
-I've spent a lot of time working with agentic development tools Claude Code and GitHub Copilot where I keep noticing a common pattern: agents build planning and implementation artifacts that are only accessible to people who can interact with the codebase. Planning happens in markdown, context lives the terminal, and decisions are captured through git which requires committing and pushing it for others to see. The people, and the agents, closest to the code can see what's happening but visibility is drastically reduced for everyone else.
+I've spent a lot of time working with agentic development tools Claude Code and GitHub Copilot where I keep noticing a common pattern: agents build planning and implementation artifacts that are only accessible to people who can interact with the codebase. Planning happens in markdown, context lives in the terminal, and decisions are captured through git which requires committing and pushing it for others to see. The people, and the agents, closest to the code can see what's happening but visibility is drastically reduced for everyone else.
 
 Ironically, we have spent decades moving in the opposite direction. Product managers, architects, designers, project managers, and business stakeholders all gradually got access to shared systems such as Jira, Azure DevOps, and GitHub where they could collaborate around the same body of work. The point was to empower everyone to participate without having to learn source control, terminal commands, and development tooling. With a wave of agent-first workflows, we are unintentionally undoing that progress where artifacts are all being generated outside of the shared tools. The information exists, but the visibility doesn't, and teams end up working in silos that we're specifically trying to avoid.
 
@@ -120,7 +120,7 @@ This wasn't about demonstrating how different agents can work in parallel but ho
 ## Doing it yourself: copy/paste ready prompts and end-to-end workflow 
 
 The example below uses GitHub, `gh`, and Claude Code from the terminal, but the same pattern works with other SDLC like Jira or Azure DevOps and agentic coding platforms like GitHub Copilot CLI, Cursor, or Gemini.
-s
+
 First, make sure the GitHub CLI is installed and authenticated:
 
 ```bash
@@ -158,7 +158,7 @@ In each feature body, restate the capability in plain language, describe the exp
 
 ### 3. Break each feature into task sub-issues
 
-With the capabilities broken down into features, the next steop is to further atomize each feature into technical task sub-issues that are concrete enough for a developer or agent to pick implement. The task issue carries the implementation guidance: 
+With the capabilities broken down into features, the next step is to further atomize each feature into technical task sub-issues that are concrete enough for a developer or agent to pick up and implement. The task issue carries the implementation guidance: 
 
 ```text
 Read GitHub issue #FEATURE_NUMBER and break it into technical task sub-issues. Each task should be created as a sub-issue of the feature, describe one concrete engineering step that helps deliver the feature's capability, include enough implementation guidance to start, explain how to validate the work, include clear done criteria, and be labeled as a task. Tasks are the how behind the capability — this is where component, manager, prefab, file, and substrate details belong, including any foundation work this capability is the first to require. Order the tasks so that prerequisite substrate is built before the steps that depend on it. Do not introduce new user-facing capabilities at the task level; if you find one, it should be its own feature. Keep the tasks simple and useful. Do not create fake tasks. If the feature is small enough to implement directly, say that instead of forcing a task breakdown. After creating the task sub-issues, update the feature Acceptance Criteria section so the task titles represent the criteria for completing the feature.
@@ -198,4 +198,4 @@ Create the next GitHub release and git tag from the work record. Find the latest
 
 ## Rinse and repeat 
 
-With this workflow, walk through all of the features in your epic one at a time. If you're feeling fancy, point multiple agents at multiple features and have them work in parallel. Have agents report back to the epic comment threads to keep each other in sync. Quickly you will find that agents will outpace your ability to review so balance implementation speed with review quality to ensure you're building quality code for make your future self (and your team) happy. 
+With this workflow, walk through all of the features in your epic one at a time. If you're feeling fancy, point multiple agents at multiple features and have them work in parallel. Have agents report back to the epic comment threads to keep each other in sync. Quickly you will find that agents will outpace your ability to review so balance implementation speed with review quality to ensure you're building quality code to make your future self (and your team) happy. 
