@@ -34,3 +34,17 @@
 .score {
   white-space: nowrap;
 }
+
+.mute {
+  font: inherit;
+  color: var(--black);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.mute:hover {
+  background: var(--black);
+  color: var(--white);
+}

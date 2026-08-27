@@ -1,0 +1,24 @@
+/* EGA menu button: gray face, hard bevel (light top-left, dark bottom-right). */
+.btn {
+  font: inherit;
+  color: var(--black);
+  background: var(--white);
+  border: 2px solid;
+  border-color: var(--white) var(--gray) var(--gray) var(--white);
+  outline: 2px solid var(--black);
+  box-shadow: 4px 4px 0 var(--black);
+  padding: 0.25rem 1rem;
+  margin: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn:hover {
+  background: var(--cyan);
+}
+
+.btn:active {
+  border-color: var(--gray) var(--white) var(--white) var(--gray); /* pressed: bevel inverts */
+  box-shadow: 2px 2px 0 var(--black);
+  transform: translate(2px, 2px);
+}

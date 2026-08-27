@@ -16,14 +16,15 @@ function load() {
 export function ScoreProvider({ children }) {
   const [awarded, setAwarded] = useState(load)
 
+  // Returns true only the first time an id is awarded, so callers can play the
+  // score "ding" exactly when points actually land.
   const award = useCallback((id, points) => {
-    setAwarded((prev) => {
-      if (prev[id]) return prev // each event scores only once, ever
-      const next = { ...prev, [id]: points }
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)) } catch { /* private mode */ }
-      return next
-    })
-  }, [])
+    if (awarded[id]) return false // each event scores only once, ever
+    const next = { ...awarded, [id]: points }
+    setAwarded(next)
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)) } catch { /* private mode */ }
+    return true
+  }, [awarded])
 
   const score = Object.values(awarded).reduce((a, b) => a + b, 0)
 

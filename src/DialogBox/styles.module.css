@@ -1,0 +1,33 @@
+.box {
+  background: var(--white);
+  color: var(--black);
+  /* double border: black line, white gap, via outline + border */
+  border: 2px solid var(--black);
+  outline: 2px solid var(--white);
+  box-shadow: 6px 6px 0 var(--black); /* hard shadow, no blur — EGA has no alpha */
+  padding: 0.75rem 1rem;
+  margin: 6px; /* room for the outline + shadow */
+  position: relative;
+}
+
+.clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.text {
+  margin: 0;
+  min-height: 2.5em; /* two lines reserved so the box doesn't jitter while typing */
+  white-space: pre-wrap;
+}
+
+.more {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.25rem;
+  animation: blink 1s steps(2) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
