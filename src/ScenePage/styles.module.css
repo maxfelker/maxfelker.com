@@ -1,0 +1,71 @@
+.scene {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.stage {
+  flex: 1;
+  position: relative;
+  min-height: 16rem;
+  overflow: hidden;
+}
+
+/* dithered floor covering the lower stage */
+.ground {
+  position: absolute;
+  inset: auto 0 0;
+  height: 42%;
+  background: repeating-conic-gradient(var(--ground) 0 25%, var(--black) 0 50%) 0 0 / 8px 8px;
+  border-top: 2px solid var(--black);
+  box-shadow: 0 -2px 0 var(--white); /* thin horizon highlight */
+}
+
+.hero {
+  position: absolute;
+  left: 12%;
+  bottom: 30%;
+}
+
+/* hotspots are wooden signposts standing on the floor */
+.hotspot {
+  position: absolute;
+  bottom: 18%;
+  transform: translateX(-50%);
+  font: inherit;
+  color: var(--white);
+  background: var(--brown);
+  border: 2px solid var(--black);
+  box-shadow: 4px 4px 0 var(--black);
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.hotspot:hover {
+  color: var(--black);
+  background: var(--accent);
+}
+
+.dialogArea {
+  min-height: 9rem;
+  padding: 0.5rem clamp(1rem, 4vw, 3rem) 1.5rem;
+}
+
+.dialogArea > * {
+  max-width: 40rem;
+  margin-inline: auto;
+}
+
+.links {
+  text-align: center;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  /* signposts can crowd on phones — stack them off the floor edge */
+  .hotspot { transform: translateX(-50%) scale(0.9); }
+}
