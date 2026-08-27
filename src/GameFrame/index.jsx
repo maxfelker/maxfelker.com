@@ -13,6 +13,7 @@ export default function GameFrame() {
         <main className={styles.viewport}>
           <Outlet />
         </main>
+        <div className={styles.crt} aria-hidden="true" />
       </ScoreProvider>
     </SoundProvider>
   )

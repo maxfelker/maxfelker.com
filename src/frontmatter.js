@@ -3,6 +3,7 @@ import { marked } from 'marked'
 // ponytail: key: value frontmatter only — all our fields are flat. Swap for gray-matter if we ever need nested YAML.
 // Lives apart from articles.js so the Node self-check can import it without touching Vite's import.meta.glob.
 export function parse(raw, path) {
+  raw = raw.replace(/\r\n/g, '\n') // CRLF checkouts (Windows autocrlf) otherwise fail the frontmatter match
   const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/)
   const meta = {}
   let body = raw
@@ -34,7 +35,7 @@ export function parse(raw, path) {
 
 // articles/<slug>/README.md -> <slug>; legacy articles/<slug>.md -> <slug>
 function slugFromPath(path) {
-  const parts = path.split('/')
+  const parts = path.split(/[\\/]/) // Windows callers hand in backslash paths
   const file = parts.pop()
   return file === 'README.md' ? parts.pop() : file.replace(/\.md$/, '')
 }
