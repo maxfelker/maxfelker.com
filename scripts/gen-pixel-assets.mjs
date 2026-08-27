@@ -218,8 +218,10 @@ function engineerBg() {
       const mortarY = (y - WALL_TOP) % 10 === 0
       const mortarX = (x + off) % 30 === 0
       const brickSeed = noise(brickX * 7, row * 13, 3)
-      let s = 0.16 + brickSeed * 0.16 + lightAt(x, y) * 0.5 + noise(x, y, 16) * 0.06
-      if (mortarY || mortarX) s *= 0.45
+      // model each brick as a lit form: bright top-left edge falling to shadow
+      const bxi = ((x + off) % 30) / 30, byi = ((y - WALL_TOP) % 10) / 10
+      let s = 0.2 + brickSeed * 0.14 + lightAt(x, y) * 0.42 + (0.2 - bxi * 0.14 - byi * 0.24)
+      if (mortarY || mortarX) s *= 0.4
       c.set(x, y, ramp(R_STONE, s, x, y))
     }
   }
@@ -272,7 +274,8 @@ function engineerBg() {
       const rowY = Math.log(1 + depth * 6) * 34
       const stoneRow = (rowY / 9) | 0
       const seed = noise(stoneX * 9, stoneRow * 5, 3)
-      let s = 0.26 + seed * 0.12 + lightAt(x, y) * 0.38 - depth * 0.16
+      const sxi = ((cx + 400) % 34) / 34 // shade across each flagstone
+      let s = 0.24 + seed * 0.12 + lightAt(x, y) * 0.34 - depth * 0.16 + (0.14 - sxi * 0.2)
       s -= Math.max(0, (Math.abs(x - 160) / 160) - 0.4) * 0.85 // corner vignette
       const jointX = ((cx + 400) % 34) < 1.2
       if (jointX) s *= 0.4
@@ -392,8 +395,11 @@ function alchemistBg() {
       const mortar = y % 12 === 0 || (x + off) % 34 === 0
       const seed = noise(((x + off) / 34 | 0) * 11, row * 7, 3)
       const g = glow(x, y)
-      let s = 0.22 + seed * 0.16 + moonlight(x, y) * 0.38 + g * 0.32 + noise(x, y, 18) * 0.05
-      if (mortar) s *= 0.45
+      // value planes: ceiling shadow above, lit lower wall, per-block modeling
+      const bxi = ((x + off) % 34) / 34, byi = (y % 12) / 12
+      let s = 0.1 + (y / WALL_BOT) * 0.3 + seed * 0.12 + moonlight(x, y) * 0.36 + g * 0.32
+        + (0.16 - bxi * 0.12 - byi * 0.18)
+      if (mortar) s *= 0.4
       c.set(x, y, ramp(g > 0.3 ? ['K', 'F', 'P', 'M'] : R_PURPLE, s, x, y))
     }
   }
@@ -545,10 +551,11 @@ function leaderBg() {
     for (let y = top; y < 104; y++) c.set(x, y, ramp(['K', 'F', 'F', 'A'], 0.35 + noise(x, y, 6) * 0.25, x, y))
   }
 
-  // flower meadow: recedes dark-to-light toward the viewer, clustered flowers
+  // flower meadow: continuous P/M/W interleave that shimmers like flowers,
+  // never resting in a flat band
   for (let y = 102; y < 148; y++) for (let x = 0; x < 320; x++) {
-    let s = 0.28 + ((y - 102) / 46) * 0.5 + noise(x, y, 20) * 0.18
-    c.set(x, y, ramp(['K', 'P', 'M', 'M'], s, x, y))
+    let s = 0.18 + ((y - 102) / 46) * 0.35 + noise(x, y, 3) * 0.42
+    c.set(x, y, ramp(['K', 'P', 'M', 'M', 'W'], s, x, y))
   }
   for (let i = 0; i < 1100; i++) {
     const x = (rnd() * 320) | 0, y = 102 + ((rnd() * 46) | 0)
@@ -572,8 +579,8 @@ function leaderBg() {
   for (let y = 148; y < 200; y++) for (let x = 0; x < 320; x++) {
     if (c.get(x, y) && Math.abs(x - (160 + Math.sin(y * 0.05) * 26)) < 4 + (y - 108) * 0.32) continue // keep path
     const band = 1 - Math.abs((y - 162) / 44)
-    let s = 0.28 + band * 0.42 + noise(x, y, 16) * 0.16
-    c.set(x, y, ramp(R_GREEN, s, x, y))
+    let s = 0.22 + band * 0.34 + noise(x, y, 3) * 0.34
+    c.set(x, y, ramp(['K', 'F', 'F', 'G', 'G'], s, x, y))
   }
   // meadow->grass seam blend
   for (let y = 146; y <= 150; y++) for (let x = 0; x < 320; x++)
@@ -590,13 +597,15 @@ function leaderBg() {
   for (let y = 58; y < 168; y++) {
     const lw = 46 - (y - 58) * 0.34 + noise(3, y, 9) * 10
     for (let x = 0; x < lw; x++) {
+      const st = (x + y * 2) % 7 / 7 // shade across each rock stratum
       const strata = ((x + y * 2) / 7) | 0
-      c.set(x, y, ramp(['K', 'A', 'P', 'A'], 0.3 + (strata % 3) * 0.16 + noise(x, y, 14) * 0.1, x, y))
+      c.set(x, y, ramp(['K', 'A', 'P', 'A'], 0.22 + (strata % 3) * 0.14 + (1 - st) * 0.24 + noise(x, y, 14) * 0.08, x, y))
     }
     const rw = 40 - (y - 58) * 0.3 + noise(313, y, 9) * 10
     for (let x = 0; x < rw; x++) {
+      const st = (x + y * 2) % 7 / 7
       const strata = ((x + y * 2) / 7) | 0
-      c.set(319 - x, y, ramp(['K', 'A', 'P', 'A'], 0.28 + (strata % 3) * 0.16 + noise(319 - x, y, 14) * 0.1, 319 - x, y))
+      c.set(319 - x, y, ramp(['K', 'A', 'P', 'A'], 0.2 + (strata % 3) * 0.14 + (1 - st) * 0.24 + noise(319 - x, y, 14) * 0.08, 319 - x, y))
     }
   }
 
@@ -675,6 +684,10 @@ function hero(cls) {
     shade3(7 + inset, 16 - inset, y, tunic, tunicHi)
   }
   c.rect(7, 8, 16, 8, tunic) // shoulder line
+  // fold shadows so the tunic reads as cloth, not a rectangle
+  c.set(10, 12, 'K'); c.set(11, 12, 'K')
+  c.set(12, 15, 'K'); c.set(13, 15, 'K')
+  c.set(9, 16, 'K')
   // right arm (viewer left) hangs; left arm raised with gear
   for (let y = 9; y <= 17; y++) { c.set(5, y, tunicHi); c.set(6, y, (y % 2) ? tunic : 'K') }
   c.rect(5, 18, 6, 19, 'W') // hand
@@ -703,7 +716,6 @@ function hero(cls) {
     c.set(18, 9, 'G'); c.set(22, 10, 'G') // glow flecks
   }
   if (cls === 'leader') {
-    c.rect(9, 2, 14, 2, 'G') // headband
     for (let y = 0; y <= 9; y++) c.set(21, y, 'W') // sword on shoulder
     c.rect(20, 10, 22, 10, 'B'); c.set(21, 11, 'B')
     for (let y = 9; y <= 25; y++) { const sway = ((y / 4) | 0) % 2; c.set(2 + sway, y, 'F'); c.set(3 + sway, y, (y % 2) ? 'F' : 'G') } // cape
