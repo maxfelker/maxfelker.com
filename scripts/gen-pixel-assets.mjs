@@ -220,7 +220,10 @@ function engineerBg() {
       const brickSeed = noise(brickX * 7, row * 13, 3)
       // model each brick as a lit form: bright top-left edge falling to shadow
       const bxi = ((x + off) % 30) / 30, byi = ((y - WALL_TOP) % 10) / 10
-      let s = 0.2 + brickSeed * 0.14 + lightAt(x, y) * 0.42 + (0.2 - bxi * 0.14 - byi * 0.24)
+      // macro value planes: ceiling shadow band up top, dusk band at the skirting
+      const plane = y < WALL_TOP + 26 ? -0.26 + ((y - WALL_TOP) / 26) * 0.26
+        : y > WALL_BOT - 14 ? -0.14 : 0
+      let s = 0.18 + plane + brickSeed * 0.12 + lightAt(x, y) * 0.55 + (0.16 - bxi * 0.12 - byi * 0.2)
       if (mortarY || mortarX) s *= 0.4
       c.set(x, y, ramp(R_STONE, s, x, y))
     }
@@ -285,6 +288,15 @@ function engineerBg() {
   // floor row joints
   for (const fy of [138, 146, 156, 168, 182, 196])
     for (let x = 0; x < 320; x++) if (noise(x, fy, 4) > 0.25) c.set(x, fy, 'K')
+  // cast shadows on the floor: under the desk and the armor pedestal
+  const castShadow = (cx2, cy2, rx, ry) => {
+    for (let y = cy2 - ry; y <= cy2 + ry; y++) for (let x = cx2 - rx; x <= cx2 + rx; x++) {
+      const d = ((x - cx2) / rx) ** 2 + ((y - cy2) / ry) ** 2
+      if (d < 1 && (x + y) % 2 === 0) c.set(x, y, 'K')
+    }
+  }
+  castShadow(255, 154, 62, 9)
+  castShadow(62, 138, 32, 5)
 
   // suit of armor on a pedestal, lit from the right torch side
   const ax = 62
@@ -397,7 +409,7 @@ function alchemistBg() {
       const g = glow(x, y)
       // value planes: ceiling shadow above, lit lower wall, per-block modeling
       const bxi = ((x + off) % 34) / 34, byi = (y % 12) / 12
-      let s = 0.1 + (y / WALL_BOT) * 0.3 + seed * 0.12 + moonlight(x, y) * 0.36 + g * 0.32
+      let s = 0.08 + (y / WALL_BOT) * 0.3 + seed * 0.12 + moonlight(x, y) * 0.48 + g * 0.36
         + (0.16 - bxi * 0.12 - byi * 0.18)
       if (mortar) s *= 0.4
       c.set(x, y, ramp(g > 0.3 ? ['K', 'F', 'P', 'M'] : R_PURPLE, s, x, y))
@@ -424,6 +436,9 @@ function alchemistBg() {
     for (let y = sy; y < sy + 5; y++) for (let x = 22; x <= 152; x++)
       c.set(x, y, ramp(R_WOOD, 0.55 - (y - sy) * 0.1 + noise(x * 2, y, 5) * 0.2, x, y))
     c.rect(22, sy + 5, 152, sy + 6, 'K')
+    // cast shadow the shelf throws down the wall
+    for (let y = sy + 7; y < sy + 13; y++) for (let x = 24; x <= 150; x++)
+      if ((x + y) % 2 === 0 && noise(x, y, 6) > 0.3) c.set(x, y, 'K')
     for (let y = sy + 6; y < sy + 9; y++) for (let x = 22; x <= 30; x++) c.set(x, y, ramp(R_WOOD, 0.3, x, y)) // bracket
     // glassware: round flask, tall tube, jug, twisted retort — varied per slot
     const cols = ['C', 'G', 'M', 'U', 'G', 'C']
@@ -465,6 +480,15 @@ function alchemistBg() {
     }
   }
   for (const fy of [136, 148, 164, 184]) for (let x = 0; x < 320; x++) if (noise(x, fy, 5) > 0.3) c.set(x, fy, 'K')
+  // cast shadows: under the work table and pooling around the cauldron
+  const shadowEllipse = (cx2, cy2, rx, ry) => {
+    for (let y = cy2 - ry; y <= cy2 + ry; y++) for (let x = cx2 - rx; x <= cx2 + rx; x++) {
+      const d = ((x - cx2) / rx) ** 2 + ((y - cy2) / ry) ** 2
+      if (d < 1 && (x + y) % 2 === 0) c.set(x, y, 'K')
+    }
+  }
+  shadowEllipse(248, 146, 66, 10)
+  shadowEllipse(80, 188, 42, 7)
 
   // work table (right) with retort and scrolls
   for (let y = 108; y < 118; y++) {
@@ -551,9 +575,12 @@ function leaderBg() {
     for (let y = top; y < 104; y++) c.set(x, y, ramp(['K', 'F', 'F', 'A'], 0.35 + noise(x, y, 6) * 0.25, x, y))
   }
 
+  // organic band boundaries — nothing in nature ends on a ruler line
+  const mTop = (x) => 97 + noise(x, 200, 21) * 11
+  const gTop = (x) => 141 + noise(x, 240, 17) * 13
   // flower meadow: continuous P/M/W interleave that shimmers like flowers,
   // never resting in a flat band
-  for (let y = 102; y < 148; y++) for (let x = 0; x < 320; x++) {
+  for (let x = 0; x < 320; x++) for (let y = mTop(x) | 0; y < gTop(x); y++) {
     let s = 0.18 + ((y - 102) / 46) * 0.35 + noise(x, y, 3) * 0.42
     c.set(x, y, ramp(['K', 'P', 'M', 'M', 'W'], s, x, y))
   }
@@ -563,9 +590,12 @@ function leaderBg() {
     const r = rnd()
     c.set(x, y, r < 0.45 ? 'F' : r < 0.7 ? 'W' : r < 0.9 ? 'G' : 'C')
   }
-  // blend the foothill->meadow seam with a checker weave
-  for (let y = 100; y <= 103; y++) for (let x = 0; x < 320; x++)
-    if ((x + y) % 2 === 0 && noise(x, y, 7) > 0.4) c.set(x, y, 'F')
+  // blend the foothill->meadow seam with a checker weave along the curve
+  for (let x = 0; x < 320; x++) {
+    const b = mTop(x) | 0
+    for (let y = b; y <= b + 3; y++)
+      if ((x + y) % 2 === 0 && noise(x, y, 7) > 0.36) c.set(x, y, 'F')
+  }
   // winding path from meadow into foreground
   for (let y = 108; y < 200; y++) {
     const cx = 160 + Math.sin(y * 0.05) * 26
@@ -576,15 +606,18 @@ function leaderBg() {
   }
 
   // foreground grass: brightest mid-band, darkening to the bottom edge
-  for (let y = 148; y < 200; y++) for (let x = 0; x < 320; x++) {
+  for (let x = 0; x < 320; x++) for (let y = gTop(x) | 0; y < 200; y++) {
     if (c.get(x, y) && Math.abs(x - (160 + Math.sin(y * 0.05) * 26)) < 4 + (y - 108) * 0.32) continue // keep path
     const band = 1 - Math.abs((y - 162) / 44)
     let s = 0.22 + band * 0.34 + noise(x, y, 3) * 0.34
     c.set(x, y, ramp(['K', 'F', 'F', 'G', 'G'], s, x, y))
   }
-  // meadow->grass seam blend
-  for (let y = 146; y <= 150; y++) for (let x = 0; x < 320; x++)
-    if ((x + y) % 2 === 0 && noise(x + 50, y, 6) > 0.42) c.set(x, y, 'M')
+  // meadow->grass seam: dither-feathered along the curve
+  for (let x = 0; x < 320; x++) {
+    const b = gTop(x) | 0
+    for (let y = b - 2; y <= b + 2; y++)
+      if ((x + y) % 2 === 0 && noise(x + 50, y, 6) > 0.38) c.set(x, y, 'M')
+  }
   for (let i = 0; i < 700; i++) {
     const x = (rnd() * 320) | 0, y = 148 + ((rnd() * 52) | 0)
     if (noise(x * 2 + 90, y * 2, 11) < 0.5) continue // tufts cluster
@@ -718,7 +751,12 @@ function hero(cls) {
   if (cls === 'leader') {
     for (let y = 0; y <= 9; y++) c.set(21, y, 'W') // sword on shoulder
     c.rect(20, 10, 22, 10, 'B'); c.set(21, 11, 'B')
-    for (let y = 9; y <= 25; y++) { const sway = ((y / 4) | 0) % 2; c.set(2 + sway, y, 'F'); c.set(3 + sway, y, (y % 2) ? 'F' : 'G') } // cape
+    // cape: solid tapered sheet off the shoulder, lit edge on the left
+    c.rect(4, 9, 6, 9, 'F') // clasp to shoulder
+    for (let y = 10; y <= 26; y++) {
+      const wdt = y < 18 ? 2 : 1
+      for (let dx = 0; dx <= wdt; dx++) c.set(2 + dx, y, dx === 0 ? 'G' : 'F')
+    }
   }
   // 1px black outline around the whole silhouette
   const outline = []
