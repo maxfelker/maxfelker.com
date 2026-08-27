@@ -1,62 +1,120 @@
-.content {
-  max-width: 44rem;
-  margin-inline: auto;
-  padding: 2rem clamp(1rem, 4vw, 3rem) 3rem;
+/* QfG character screen: one big light panel filling the page, blue stat text,
+   magenta accents, portrait frame on the left. */
+.page {
+  min-height: 100%;
+  padding: clamp(0.5rem, 3vw, 2rem);
+  display: flex;
 }
 
 .panel {
-  margin-block: 1.5rem;
-}
-
-.h {
+  flex: 1;
+  background: var(--white);
   color: var(--black);
-  margin: 0 0 0.75rem;
-  font-size: 1.25rem;
-}
-.panel .h + .h,
-.panel ul + .h {
-  margin-top: 1.25rem;
-}
-
-.kv td:first-child {
-  color: var(--gray);
-  padding-right: 1.5rem;
-  white-space: nowrap;
-  vertical-align: top;
+  border: 2px solid var(--black);
+  outline: 2px solid var(--white);
+  box-shadow: 6px 6px 0 var(--black);
+  padding: clamp(1rem, 3vw, 2rem);
+  display: flex;
+  flex-direction: column;
 }
 
-.stats {
-  width: 100%;
+.nameRow {
+  font-size: 1.4rem;
+  border-bottom: 2px solid var(--black);
+  padding-bottom: 0.5rem;
 }
-.stats td {
-  padding-block: 1px;
-}
-.stats td:first-child {
-  padding-right: 1rem;
-  white-space: nowrap;
-}
-.bar {
-  color: var(--forest-green);
-  letter-spacing: -1px;
-  overflow: hidden;
-}
-.stats td:last-child {
-  padding-left: 0.75rem;
-  color: var(--gray);
+.nameValue { color: var(--blue); }
+
+.columns {
+  display: flex;
+  justify-content: center;
+  gap: clamp(1rem, 5vw, 5rem);
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
 }
 
-.tags {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.portraitCol {
+  text-align: center;
+}
+
+/* the ornate portrait frame */
+.frame {
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0.75rem 1.25rem 0.25rem;
+  background: repeating-conic-gradient(var(--gray) 0 25%, var(--black) 0 50%) 0 0 / 4px 4px;
+  border: 6px solid var(--brown);
+  outline: 3px solid var(--blue);
+  box-shadow: inset 0 0 0 2px var(--black);
+}
+
+.klass {
+  margin: 0.75rem 0 0;
+  color: var(--purple);
+}
+.guild { margin: 0; }
+.guild a { color: var(--blue); }
+
+.skills {
+  flex: 0 1 24rem;
+  min-width: 15rem;
+  align-self: flex-start;
+  border-collapse: collapse;
+}
+.skills td {
+  color: var(--blue);
+  padding: 0.15rem 0;
+  font-size: 1.1rem;
+}
+.num {
+  color: var(--blue);
+  text-align: right;
+  padding-left: 1rem;
+}
+
+/* Points bar, like "Points Available" in the reference */
+.pointsRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+.pointsLabel { color: var(--magenta); }
+.pointsBar {
+  flex: 1;
+  min-width: 8rem;
+  height: 1rem;
+  border: 2px solid var(--black);
+  background: var(--white);
+}
+.pointsFill {
+  display: block;
+  height: 100%;
+  background: var(--black);
+}
+.pointsNum { color: var(--blue); }
+
+.hint {
+  color: var(--magenta);
+  margin-top: 0.25rem;
+}
+
+.bottom {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.vitals p { margin: 0 0 0.25rem; }
+
+.actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 1rem;
-}
-
-.links {
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  margin: 0;
+  justify-content: flex-end;
 }

@@ -1,10 +1,13 @@
 import { useEffect } from 'react'
-import DialogBox from '../DialogBox'
-import { useScore } from '../score'
+import Sprite from '../Sprite'
+import PixelButton from '../PixelButton'
+import { MAX_SCORE, useScore } from '../score'
 import { useSound } from '../sound'
+import leaderSheet from '../assets/pixel/leader.png'
 import styles from './styles.module.css'
 
-const STATS = [
+// Two skill columns, QfG character-screen style.
+const SKILLS_LEFT = [
   ['Art of the Possible', 19],
   ['Product Vision', 18],
   ['Rapid Prototyping', 18],
@@ -12,19 +15,19 @@ const STATS = [
   ['Change Management', 17],
   ['Talent Growth', 16],
 ]
-
-const INVENTORY = [
-  '3D Studio Max (childhood artifact)', 'Unity', 'React', 'Go / WASM',
-  'WebGPU', 'Azure', 'Agile at Scale', 'Executive Whispering',
+const SKILLS_RIGHT = [
+  ['Unity / 3D', 16],
+  ['React / Web', 17],
+  ['Go / WASM', 15],
+  ['WebGPU', 15],
+  ['Azure', 16],
+  ['Executive Whispering', 18],
 ]
 
 const REALMS = ['Financial Services', 'Health Care', 'Commercial Retail', 'Mixed Reality', 'Startups']
 
-// text bar in CP437 blocks, 20 wide — the VGA font renders these natively
-const bar = (n) => '▓'.repeat(n) + '░'.repeat(20 - n)
-
 export default function CharacterSheetPage() {
-  const { award } = useScore()
+  const { score, award } = useScore()
   const { play } = useSound()
 
   useEffect(() => {
@@ -32,56 +35,62 @@ export default function CharacterSheetPage() {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps -- first-visit award only
 
   return (
-    <div className={styles.content}>
-      <h1>Character Sheet</h1>
-
-      <DialogBox className={styles.panel}>
-        <h2 className={styles.h}>Identity</h2>
-        <table className={styles.kv}>
-          <tbody>
-            <tr><td>Name</td><td>Max Felker</td></tr>
-            <tr><td>Class</td><td>Principal Technical Program Manager</td></tr>
-            <tr><td>Guild</td><td><a href="https://www.microsoft.com/en-us/frontier-company" target="_blank" rel="noreferrer">Microsoft Frontier Company</a></td></tr>
-            <tr><td>Level</td><td>20 — two decades of adventuring</td></tr>
-            <tr><td>Power</td><td>Realizing the art of the possible: ideas 0→1, products 1→10</td></tr>
-          </tbody>
-        </table>
-      </DialogBox>
-
-      <DialogBox className={styles.panel}>
-        <h2 className={styles.h}>Attributes</h2>
-        <table className={styles.stats}>
-          <tbody>
-            {STATS.map(([name, n]) => (
-              <tr key={name}>
-                <td>{name}</td>
-                <td className={styles.bar} aria-label={`${n} of 20`}>{bar(n)}</td>
-                <td>{n}/20</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </DialogBox>
-
-      <DialogBox className={styles.panel}>
-        <h2 className={styles.h}>Inventory</h2>
-        <ul className={styles.tags}>
-          {INVENTORY.map((i) => <li key={i}>[{i}]</li>)}
-        </ul>
-        <h2 className={styles.h}>Realms Traveled</h2>
-        <ul className={styles.tags}>
-          {REALMS.map((r) => <li key={r}>[{r}]</li>)}
-        </ul>
-      </DialogBox>
-
-      <DialogBox className={styles.panel}>
-        <h2 className={styles.h}>Deeds &amp; Records</h2>
-        <p className={styles.links}>
-          <a href="https://linkedin.com/in/maxfelker" target="_blank" rel="noreferrer">[LinkedIn]</a>
-          <a href="https://github.com/maxfelker" target="_blank" rel="noreferrer">[GitHub]</a>
-          <a href="https://stackoverflow.com/users/127012/m-w-felker" target="_blank" rel="noreferrer">[Stack Overflow]</a>
+    <div className={styles.page}>
+      <div className={styles.panel}>
+        <p className={styles.nameRow}>
+          Name : <span className={styles.nameValue}>Max Felker</span>
         </p>
-      </DialogBox>
+
+        <div className={styles.columns}>
+          {/* portrait in the ornate frame, like the QfG stat screen */}
+          <div className={styles.portraitCol}>
+            <span className={styles.frame}>
+              <Sprite sheet={leaderSheet} frameWidth={24} frameHeight={36} frames={2} fps={2} scale={3} />
+            </span>
+            <p className={styles.klass}>Principal TPM</p>
+            <p className={styles.guild}>
+              <a href="https://www.microsoft.com/en-us/frontier-company" target="_blank" rel="noreferrer">Microsoft Frontier Co.</a>
+            </p>
+          </div>
+
+          <table className={styles.skills}>
+            <tbody>
+              {SKILLS_LEFT.map(([name, n]) => (
+                <tr key={name}><td>{name}</td><td className={styles.num}>{n}</td></tr>
+              ))}
+            </tbody>
+          </table>
+
+          <table className={styles.skills}>
+            <tbody>
+              {SKILLS_RIGHT.map(([name, n]) => (
+                <tr key={name}><td>{name}</td><td className={styles.num}>{n}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className={styles.pointsRow}>
+          <span className={styles.pointsLabel}>Quest Points</span>
+          <span className={styles.pointsBar} aria-label={`${score} of ${MAX_SCORE}`}>
+            <span className={styles.pointsFill} style={{ width: `${(score / MAX_SCORE) * 100}%` }} />
+          </span>
+          <span className={styles.pointsNum}>{score} / {MAX_SCORE}</span>
+        </div>
+        <p className={styles.hint}>Explore the realm to earn more points.</p>
+
+        <div className={styles.bottom}>
+          <div className={styles.vitals}>
+            <p>Level <span className={styles.num}>20</span> — two decades of adventuring</p>
+            <p>Realms traveled: {REALMS.join(', ')}</p>
+          </div>
+          <div className={styles.actions}>
+            <PixelButton onClick={() => window.open('https://linkedin.com/in/maxfelker', '_blank')}>LinkedIn</PixelButton>
+            <PixelButton onClick={() => window.open('https://github.com/maxfelker', '_blank')}>GitHub</PixelButton>
+            <PixelButton onClick={() => window.open('https://stackoverflow.com/users/127012/m-w-felker', '_blank')}>Stack Overflow</PixelButton>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

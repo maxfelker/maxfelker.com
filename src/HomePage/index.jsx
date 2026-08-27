@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { articles } from '../articles'
 import ArticleList from '../ArticleList'
-import DialogBox from '../DialogBox'
 import Sprite from '../Sprite'
 import { useScore } from '../score'
 import { useSound } from '../sound'
@@ -10,6 +9,7 @@ import mountain from '../assets/pixel/mountain.png'
 import engineerSheet from '../assets/pixel/engineer.png'
 import alchemistSheet from '../assets/pixel/alchemist.png'
 import leaderSheet from '../assets/pixel/leader.png'
+import musicUrl from '../assets/sfx/music.wav'
 import styles from './styles.module.css'
 
 const CLASSES = [
@@ -20,11 +20,12 @@ const CLASSES = [
 
 export default function HomePage() {
   const [begun, setBegun] = useState(false)
-  const { play } = useSound()
+  const { play, playMusic } = useSound()
   const { award } = useScore()
 
   function begin() {
     play('start') // the click is also the browser's audio-unlock gesture
+    playMusic(musicUrl)
     award('begin', 5)
     setBegun(true)
   }
@@ -47,35 +48,30 @@ export default function HomePage() {
   }
 
   return (
-    <div className={styles.content}>
-      <div className={styles.scene}>
-        <DialogBox className={styles.prompt}>
-          <p>
-            So you want to know a hero? Max wears many faces. Choose thy guide,
-            brave soul, and see what each one has wrought.
-          </p>
-        </DialogBox>
-        <div className={styles.classes}>
-          {CLASSES.map((c) => (
-            <Link
-              key={c.slug}
-              className={styles.card}
-              to={`/${c.slug}`}
-              onClick={() => play('click')}
-            >
+    <div className={styles.select}>
+      <h1 className={styles.choose}>CHOOSE YOUR CHARACTER</h1>
+      <div className={styles.classes}>
+        {CLASSES.map((c) => (
+          <Link
+            key={c.slug}
+            className={styles.card}
+            to={`/${c.slug}`}
+            onClick={() => play('click')}
+          >
+            <span className={styles.frame}>
               <Sprite
                 sheet={c.sheet}
-                frameWidth={16}
-                frameHeight={24}
+                frameWidth={24}
+                frameHeight={36}
                 frames={2}
                 fps={2}
-                scale={5}
+                scale={4}
               />
-              <span className={styles.name}>{c.name}</span>
-              <span className={styles.tag}>{c.tag}</span>
-            </Link>
-          ))}
-        </div>
+            </span>
+            <span className={styles.name}>{c.name}</span>
+            <span className={styles.tag}>{c.tag}</span>
+          </Link>
+        ))}
       </div>
       <section className={styles.tales}>
         <h2>Tales from the tavern</h2>

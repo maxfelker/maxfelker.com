@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import DialogBox from '../DialogBox'
 import { useScore } from '../score'
 import { useSound } from '../sound'
 import styles from './styles.module.css'
@@ -44,26 +43,32 @@ export default function SideQuestsPage() {
 
   return (
     <div className={styles.content}>
-      <h1>Quest Log</h1>
-      <p className={styles.intro}>The side quests of Max Felker. New entries appear as the campaigns unfold.</p>
-      {QUESTS.map((q) => (
-        <DialogBox key={q.title} className={styles.quest}>
-          <div className={styles.head}>
-            <h2 className={styles.title}>{q.title}</h2>
-            <span className={q.status === 'COMPLETED' ? styles.done : styles.wip}>
-              [{q.status}]
-            </span>
-          </div>
-          <p>{q.body}</p>
-          {q.links.length > 0 && (
-            <p className={styles.links}>
-              {q.links.map((l) => (
-                <a key={l.href} href={l.href} target="_blank" rel="noreferrer">[{l.label}]</a>
-              ))}
-            </p>
-          )}
-        </DialogBox>
-      ))}
+      <div className={styles.scroll}>
+        <div className={styles.rollTop} />
+        <div className={styles.sheet}>
+          <h1 className={styles.title}>Quest Log</h1>
+          <p className={styles.intro}>The side quests of Max Felker. New entries appear as the campaigns unfold.</p>
+          {QUESTS.map((q) => (
+            <section key={q.title} className={styles.quest}>
+              <div className={styles.head}>
+                <h2 className={styles.questTitle}>{q.title}</h2>
+                <span className={q.status === 'COMPLETED' ? styles.done : styles.wip}>
+                  [{q.status}]
+                </span>
+              </div>
+              <p>{q.body}</p>
+              {q.links.length > 0 && (
+                <p className={styles.links}>
+                  {q.links.map((l) => (
+                    <a key={l.href} href={l.href} target="_blank" rel="noreferrer">[{l.label}]</a>
+                  ))}
+                </p>
+              )}
+            </section>
+          ))}
+        </div>
+        <div className={styles.rollBottom} />
+      </div>
     </div>
   )
 }

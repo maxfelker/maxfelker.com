@@ -1,15 +1,63 @@
 .content {
-  max-width: 44rem;
+  max-width: 46rem;
   margin-inline: auto;
-  padding: 2rem clamp(1rem, 4vw, 3rem) 3rem;
+  padding: 2rem clamp(0.5rem, 4vw, 3rem) 3rem;
+}
+
+/* ---- the scroll: rolled brown ends, parchment body ---- */
+.scroll {
+  position: relative;
+}
+
+/* rolled ends: thick brown bars with hard highlights, wider than the sheet */
+.rollTop, .rollBottom {
+  height: 1.5rem;
+  margin-inline: -1rem;
+  background: var(--brown);
+  border: 2px solid var(--black);
+  box-shadow: 4px 4px 0 var(--black);
+  position: relative;
+  z-index: 1;
+}
+.rollTop::after, .rollBottom::after {
+  content: '';
+  position: absolute;
+  inset: 2px 6px auto;
+  height: 4px;
+  background: var(--white); /* the light catching the roll */
+  opacity: 0.5;
+}
+
+.sheet {
+  background: var(--white);
+  color: var(--black);
+  border-inline: 2px solid var(--black);
+  padding: 1.5rem clamp(1rem, 4vw, 2.5rem) 2rem;
+  /* parchment edge dither along the sides */
+  background-image:
+    repeating-linear-gradient(var(--gray) 0 2px, transparent 0 6px),
+    repeating-linear-gradient(var(--gray) 0 2px, transparent 0 6px);
+  background-size: 4px 100%, 4px 100%;
+  background-position: left, right;
+  background-repeat: no-repeat;
+}
+
+.title {
+  color: var(--brown);
+  text-align: center;
+  font-size: clamp(1.8rem, 6vw, 2.5rem);
+  margin-bottom: 0.5rem;
 }
 
 .intro {
+  text-align: center;
   color: var(--gray);
 }
 
 .quest {
-  margin-block: 1.5rem;
+  border-top: 2px dashed var(--gray); /* ruled separators on the parchment */
+  padding-top: 1rem;
+  margin-top: 1.5rem;
 }
 
 .head {
@@ -20,11 +68,10 @@
   flex-wrap: wrap;
 }
 
-/* inside the white box, headings go black like game menu text */
-.title {
+.questTitle {
   color: var(--black);
   margin: 0 0 0.75rem;
-  font-size: 1.25rem;
+  font-size: 1.4rem;
 }
 
 .done { color: var(--forest-green); }
@@ -36,3 +83,5 @@
   flex-wrap: wrap;
   margin: 0;
 }
+.links a { color: var(--blue); }
+.links a:visited { color: var(--purple); }

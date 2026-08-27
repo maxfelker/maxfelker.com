@@ -24,8 +24,11 @@ export function SoundProvider({ children }) {
     base.cloneNode().play().catch(() => {}) // rejected before first user gesture — fine
   }, [])
 
-  // Looping background music. Passing null stops it.
+  // Looping background music. Passing null stops it. Remembers the last track
+  // so unmuting resumes it.
+  const trackRef = useRef(null)
   const playMusic = useCallback((url) => {
+    trackRef.current = url
     const m = musicRef.current
     if (m?.dataset.url === url) return
     m?.pause()
@@ -46,9 +49,10 @@ export function SoundProvider({ children }) {
       mutedRef.current = next
       if (next) { musicRef.current?.pause(); musicRef.current = null }
       try { localStorage.setItem(STORAGE_KEY, next ? '1' : '0') } catch { /* private mode */ }
+      if (!next && trackRef.current) playMusic(trackRef.current)
       return next
     })
-  }, [])
+  }, [playMusic])
 
   return (
     <SoundContext.Provider value={{ muted, play, toggleMuted, playMusic }}>

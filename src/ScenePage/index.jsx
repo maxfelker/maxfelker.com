@@ -6,7 +6,29 @@ import { useSound } from '../sound'
 import engineerSheet from '../assets/pixel/engineer.png'
 import alchemistSheet from '../assets/pixel/alchemist.png'
 import leaderSheet from '../assets/pixel/leader.png'
+import bgEngineer from '../assets/pixel/bg-engineer.png'
+import bgAlchemist from '../assets/pixel/bg-alchemist.png'
+import bgLeader from '../assets/pixel/bg-leader.png'
+import torchSheet from '../assets/pixel/torch.png'
+import flaskSheet from '../assets/pixel/flask.png'
+import birdSheet from '../assets/pixel/bird.png'
 import styles from './styles.module.css'
+
+// animated set dressing per scene, positioned in % of the stage
+const PROPS = {
+  engineer: [
+    { sheet: torchSheet, fw: 12, fh: 28, frames: 3, fps: 6, left: '38%', top: '18%' },
+    { sheet: torchSheet, fw: 12, fh: 28, frames: 3, fps: 7, left: '90%', top: '18%' },
+  ],
+  alchemist: [
+    { sheet: flaskSheet, fw: 16, fh: 24, frames: 3, fps: 4, left: '85%', top: '38%' },
+    { sheet: flaskSheet, fw: 16, fh: 24, frames: 3, fps: 3, left: '12%', top: '30%' },
+  ],
+  leader: [
+    { sheet: birdSheet, fw: 16, fh: 10, frames: 2, fps: 4, className: 'fly', top: '12%' },
+    { sheet: birdSheet, fw: 16, fh: 10, frames: 2, fps: 5, className: 'fly2', top: '7%' },
+  ],
+}
 
 // Each class page is a "scene": narration plays in the dialog box, then the
 // visitor inspects hotspots (the signposts) for the real content. Points land
@@ -14,8 +36,8 @@ import styles from './styles.module.css'
 const SCENES = {
   engineer: {
     sheet: engineerSheet,
+    bg: bgEngineer,
     accent: 'var(--cyan)',
-    ground: 'var(--gray)',
     narration: [
       "You stand in the Engineer's forge. Two decades of craft glow in the coals.",
       'Here Max forges rapid prototypes and best-in-class systems alike — shipped on time, at scale.',
@@ -52,8 +74,8 @@ const SCENES = {
   },
   alchemist: {
     sheet: alchemistSheet,
+    bg: bgAlchemist,
     accent: 'var(--magenta)',
-    ground: 'var(--purple)',
     narration: [
       "You enter the Alchemist's tower. Strange vessels bubble with half-formed ideas.",
       "Max's superpower is realizing the art of the possible — transmuting raw ideas into living products, 0 to 1.",
@@ -87,8 +109,8 @@ const SCENES = {
   },
   leader: {
     sheet: leaderSheet,
+    bg: bgLeader,
     accent: 'var(--bright-green)',
-    ground: 'var(--forest-green)',
     narration: [
       "You arrive at the Leader's war table. Banners of many campaigns hang above it.",
       'A trusted and versatile leader: Max takes ideas from 0 to 1 and products from 1 to 10.',
@@ -141,28 +163,43 @@ export default function ScenePage({ slug }) {
 
   return (
     <div className={styles.scene}>
-      <div className={styles.stage}>
-        <div className={styles.ground} style={{ '--ground': scene.ground }} />
-        <Sprite
-          className={styles.hero}
-          sheet={scene.sheet}
-          frameWidth={16}
-          frameHeight={24}
-          frames={2}
-          fps={2}
-          scale={5}
-        />
-        {scene.hotspots.map((h) => (
-          <button
-            key={h.id}
-            className={styles.hotspot}
-            style={{ left: h.x, '--accent': scene.accent }}
-            onClick={() => inspect(h)}
-          >
-            {h.label}
-          </button>
-        ))}
-      </div>
+      {/* 320x200 art stretched across the whole stage, Sierra-style */}
+      <img className={styles.bg} src={scene.bg} alt="" />
+      {(PROPS[slug] ?? []).map((p, i) => (
+        <div
+          key={i}
+          className={`${styles.prop} ${p.className ? styles[p.className] : ''}`}
+          style={{ left: p.left, top: p.top }}
+        >
+          <Sprite
+            sheet={p.sheet}
+            frameWidth={p.fw}
+            frameHeight={p.fh}
+            frames={p.frames}
+            fps={p.fps}
+            scale={5}
+          />
+        </div>
+      ))}
+      <Sprite
+        className={styles.hero}
+        sheet={scene.sheet}
+        frameWidth={24}
+        frameHeight={36}
+        frames={2}
+        fps={2}
+        scale={6}
+      />
+      {scene.hotspots.map((h) => (
+        <button
+          key={h.id}
+          className={styles.hotspot}
+          style={{ left: h.x, '--accent': scene.accent }}
+          onClick={() => inspect(h)}
+        >
+          {h.label}
+        </button>
+      ))}
       <div className={styles.dialogArea}>
         {active ? (
           <>
