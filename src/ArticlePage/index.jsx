@@ -1,12 +1,21 @@
 import { useEffect, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getArticle } from '../articles'
+import { useScore } from '../score'
+import { useSound } from '../sound'
 import styles from './styles.module.css'
 
 export default function ArticlePage() {
   const { slug } = useParams()
   const article = getArticle(slug)
   const bodyRef = useRef(null)
+  const { award } = useScore()
+  const { play } = useSound()
+
+  // reading a tavern tale is worth points, once per tale
+  useEffect(() => {
+    if (article && award(`article-${slug}`, 15)) play('ding')
+  }, [slug]) // eslint-disable-line react-hooks/exhaustive-deps -- first-read award only
 
   // The article HTML comes from marked, so the copy buttons for the prompt blocks
   // get added here instead of in the Markdown. Progressive enhancement: no JS, no button.

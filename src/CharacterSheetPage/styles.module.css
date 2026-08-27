@@ -1,0 +1,62 @@
+.content {
+  max-width: 44rem;
+  margin-inline: auto;
+  padding: 2rem clamp(1rem, 4vw, 3rem) 3rem;
+}
+
+.panel {
+  margin-block: 1.5rem;
+}
+
+.h {
+  color: var(--black);
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+}
+.panel .h + .h,
+.panel ul + .h {
+  margin-top: 1.25rem;
+}
+
+.kv td:first-child {
+  color: var(--gray);
+  padding-right: 1.5rem;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.stats {
+  width: 100%;
+}
+.stats td {
+  padding-block: 1px;
+}
+.stats td:first-child {
+  padding-right: 1rem;
+  white-space: nowrap;
+}
+.bar {
+  color: var(--forest-green);
+  letter-spacing: -1px;
+  overflow: hidden;
+}
+.stats td:last-child {
+  padding-left: 0.75rem;
+  color: var(--gray);
+}
+
+.tags {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+}
+
+.links {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin: 0;
+}
