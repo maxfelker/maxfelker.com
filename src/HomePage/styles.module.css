@@ -1,78 +1,106 @@
+/* ---- splash: "MAX FELKER PRESENTS" over the Sierra mountain ---- */
+.splash {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.mountain {
+  width: min(480px, 85vw);
+}
+
+.presents {
+  font-size: clamp(2rem, 8vw, 3rem);
+  color: var(--magenta);
+  text-shadow: 4px 4px 0 var(--purple); /* hard offset, no blur */
+  margin: 1rem 0 0;
+}
+
+.sub {
+  color: var(--bright-green);
+  letter-spacing: 0.75em;
+  margin: 0.25rem 0 0 0.75em; /* left margin rebalances the letter-spacing tail */
+}
+
+.begin {
+  margin-top: 3rem;
+  color: var(--white);
+  animation: blink 1.2s steps(2) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .begin { animation: none; }
+}
+
+/* ---- character select ---- */
 .content {
-  padding-inline: var(--pad-inline);
-  padding-block: 2rem;
-  max-width: 845px;
+  min-height: 100%;
+}
+
+.scene {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 60vh;
+  padding: 2rem clamp(1rem, 4vw, 3rem) 0;
+}
+
+.prompt {
+  max-width: 34rem;
   margin-inline: auto;
 }
 
-@media screen and (min-width: 1080px) {
-  .content {
-    padding-block-start: 6rem;
-  }
+.classes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: clamp(1rem, 6vw, 4rem);
+  margin-top: 2rem;
+  padding: 1rem 1rem 2rem;
+  /* dithered grass: 2x2 checker of forest green on black, zoomed 4x */
+  background: repeating-conic-gradient(var(--forest-green) 0 25%, var(--black) 0 50%) 0 0 / 8px 8px;
+  border-top: 2px solid var(--black);
 }
 
-/* Mobile-first: stacked and centered (front and center). */
-.hero {
+.card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  gap: 1.5rem;
-  margin-block-end: 2.5rem;
-}
-
-.heroText {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
-.hero h1 {
-  margin: 0;
-}
-
-.avatar {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  object-fit: cover;
-  /*transform: rotate(180deg); upside down already in picture */
-}
-
-.cta {
-  display: inline-block;
-  padding: 0.75rem 1.75rem;
-  background-color: #ff4ac8;
-  color: #010101;
-  border-radius: 999px;
-  font-weight: 600;
+  gap: 0.75rem;
   text-decoration: none;
+  padding: 0.5rem;
 }
 
-.cta:visited {
-  color: #010101;
+.name {
+  background: var(--white);
+  color: var(--black);
+  border: 2px solid var(--black);
+  box-shadow: 3px 3px 0 var(--black);
+  padding: 0 0.5rem;
+}
+.card:hover .name {
+  background: var(--cyan);
 }
 
-.cta:hover {
-  background-color: #ff7ad6;
-  color: #010101;
+.tag {
+  color: var(--white);
+  background: var(--black); /* keeps it readable on the grass dither */
+  padding: 0 0.25rem;
+  font-size: 1rem;
 }
 
-/* Desktop: profile photo to the left of the tagline, left-aligned. */
-@media screen and (min-width: 1080px) {
-  .hero {
-    flex-direction: row;
-    align-items: center;
-    text-align: left;
-    gap: 2.5rem;
-  }
-
-  .heroText {
-    align-items: flex-start;
-  }
-
-  .avatar {
-    flex-shrink: 0;
-  }
+/* ---- articles ---- */
+.tales {
+  padding: 1rem clamp(1rem, 4vw, 3rem) 3rem;
+  max-width: 44rem;
 }

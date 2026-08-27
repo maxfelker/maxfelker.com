@@ -36,6 +36,11 @@
   background-color: var(--black);
 }
 
+html {
+  /* EGA arrow cursor everywhere (12x18 pixel art) */
+  cursor: url('./assets/pixel/cursor.png') 0 0, default;
+}
+
 html, body, #root {
   margin: 0;
   height: 100dvh;
